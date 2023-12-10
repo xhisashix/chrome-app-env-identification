@@ -21,13 +21,14 @@
         </div>
         <div id="form_area" class="mt-4">
           <!-- tailwindcss form -->
-          <form class="w-full">
+          <form class="w-full" id="env_form">
             <!-- tailwindcss table -->
             <table class="table-auto w-full">
               <thead>
                 <tr>
                   <th class="px-4 py-2">環境名</th>
                   <th class="px-4 py-2">URL</th>
+                  <th class="px-4 py-2">備考</th>
                   <th class="px-4 py-2">削除</th>
                 </tr>
               </thead>
@@ -49,6 +50,15 @@
                       placeholder="URL"
                       aria-label="URL"
                       id="env_url"
+                    />
+                  </td>
+                  <td class="border px-4 py-2">
+                    <input
+                      class="appearance-none bg-transparent border border-solid border-gray-200 w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                      type="text"
+                      placeholder="備考"
+                      aria-label="備考"
+                      id="message"
                     />
                   </td>
                   <td class="border px-4 py-2">
@@ -76,6 +86,6 @@
       </div>
     </main>
 
-    <script src="../js/popup.js"></script>
+    <script src="../js/options.js"></script>
   </body>
 </html>
