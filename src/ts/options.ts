@@ -17,16 +17,13 @@ function init() {
 function setupEventHandlers() {
   const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
   saveEnv.addEventListener("click", function () {
-    console.log("saveEnv");
-    OptionClass.saveToStorageEnvSettings(JSON.stringify(getFormData()));
+    OptionClass.saveToStorageEnvSettings([getFormData()]);
   });
 }
 
 // get env settings from storage
 function getEnvSettings() {
-  OptionClass.getStorageEnvSettings(function (result: string) {
-    console.log(result);
-  });
+  OptionClass.getStorageEnvSettings(function (result: string) {});
 }
 
 // get form data

@@ -6,6 +6,8 @@ interface envSettings {
   message: string;
 }
 
+type envSettingsArray = Array<envSettings>;
+
 class optionClass {
   storage: storageClass;
   constructor() {
@@ -14,11 +16,39 @@ class optionClass {
 
   /**
    * saveToStorage - env settings save to storage
-   * @param {string} value - Value to save settings under
+   * @param {Object} value - Value to save settings under
    * @return {void}
    */
-  saveToStorageEnvSettings(value: string) {
-    this.storage.saveToStorage("env_settings", value);
+  saveToStorageEnvSettings(value: Array<envSettings>): void {
+    let envSettings: envSettingsArray = []; // Change the type to envSettingsArray and initialize as an empty array
+    // 既存のenv settingsを取得
+    this.getStorageEnvSettings((result: string) => {
+      envSettings = this.getEnvSettings(result); // Assign the existing env settings to envSettings
+      // 既存のenv settingsに新しいenv settingsを追加
+      envSettings.push(value[0]);
+      // env settingsをstorageに保存
+      this.saveToStorageEnvSettingsArray(envSettings);
+    });
+  }
+  /**
+   * Saves the envSettings array to storage.
+   * @param envSettings - The array of envSettings to be saved.
+   */
+  saveToStorageEnvSettingsArray(envSettings: envSettings[]) {
+    this.storage.saveToStorage("env_settings", JSON.stringify(envSettings));
+  }
+
+  /**
+   * getEnvSettings - env settings get from storage
+   * @param {string} result - env settings
+   * @return {Array} envSettings - env settings
+   */
+  getEnvSettings(result: string): envSettings[] {
+    if (result) {
+      return JSON.parse(result);
+    } else {
+      return [];
+    }
   }
 
   /**
@@ -30,4 +60,4 @@ class optionClass {
   }
 }
 
-export default optionClass
+export default optionClass;
