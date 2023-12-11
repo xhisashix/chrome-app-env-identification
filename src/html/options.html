@@ -81,10 +81,29 @@
               >
                 保存
               </button>
+            </div>
           </form>
         </div>
+        <!-- env list -->
+        <div class="mt-4">
+          <h2 class="text-xl">環境一覧</h2>
+          <div id="env_list_area" class="mt-4">
+            <!-- tailwindcss table -->
+            <table class="table-auto w-full" id="env_settings_table">
+              <thead>
+                <tr>
+                  <th class="px-4 py-2">環境名</th>
+                  <th class="px-4 py-2">URL</th>
+                  <th class="px-4 py-2">備考</th>
+                  <th class="px-4 py-2">削除</th>
+                </tr>
+              </thead>
+              <tbody id="env_list"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
-          </main>
+    </main>
 
     <script src="../js/options.js"></script>
   </body>
