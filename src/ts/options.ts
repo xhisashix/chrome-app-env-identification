@@ -18,6 +18,7 @@ function setupEventHandlers() {
   const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
   saveEnv.addEventListener("click", function () {
     OptionClass.saveToStorageEnvSettings([getFormData()]);
+    resetFormData();
   });
 }
 
@@ -44,6 +45,13 @@ function getFormData() {
   return envSettings;
 }
 
+// reset form data
+function resetFormData() {
+  (document.getElementById("env_name") as HTMLInputElement).value = "";
+  (document.getElementById("env_url") as HTMLInputElement).value = "";
+  (document.getElementById("message") as HTMLInputElement).value = "";
+}
+
 // create env settings table in options page
 function createEnvSettingsTableList(envSettings: envSettings[]) {
   const envSettingsTable = document.getElementById(
@@ -55,6 +63,7 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
   // create table row
   envSettings.forEach((envSetting) => {
     const envSettingsTableRow = document.createElement("tr");
+    envSettingsTableRow.classList.add("odd:bg-white", "even:bg-blue-100");
     envSettingsTableRow.id = "env_settings_table_row";
 
     // create table cell
@@ -77,8 +86,27 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
 // create td element for env settings table
 function createTableCell(text: string) {
   const cell = document.createElement("td");
-  cell.classList.add("border", "px-4", "py-2");
-  cell.textContent = text;
+  cell.classList.add("border-t", "px-4", "py-2", "border-gray-400");
+  // add input element
+  const input = document.createElement("input");
+  input.classList.add(
+    "w-full",
+    "appearance-none",
+    "bg-transparent",
+    "border",
+    "border-solid",
+    "border-gray-400",
+    "text-gray-700",
+    "mr-3",
+    "py-1",
+    "px-2",
+    "leading-tight",
+    "focus:outline-none"
+  );
+  input.value = text;
+
+  // add input element to td element
+  cell.appendChild(input);
   return cell;
 }
 

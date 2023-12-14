@@ -20,7 +20,7 @@ class optionClass {
    * @return {void}
    */
   saveToStorageEnvSettings(value: Array<envSettings>): void {
-    let envSettings: envSettingsArray = []; // Change the type to envSettingsArray and initialize as an empty array
+    let envSettings: envSettingsArray = [];
     // 既存のenv settingsを取得
     this.getStorageEnvSettings((result: string) => {
       envSettings = this.getEnvSettings(result); // Assign the existing env settings to envSettings
