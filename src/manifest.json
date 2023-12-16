@@ -7,7 +7,13 @@
   "background": {
     "service_worker": "./js/background.js"
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./js/content.js"]
+    }
+  ],
   "options_page": "./html/options.html",
-  "host_permissions": ["https://developer.chrome.com/*"],
-  "permissions": ["storage", "activeTab"]
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["storage", "activeTab", "tab", "scripting"]
 }
