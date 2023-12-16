@@ -15,11 +15,12 @@ function init() {
 
 // event handlers setting
 function setupEventHandlers() {
-  // const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
-  // saveEnv.addEventListener("click", function () {
-  //   OptionClass.saveToStorageEnvSettings([getFormData()]);
-  //   resetFormData();
-  // });
+  const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
+  saveEnv.addEventListener("click", function () {
+    const envSettings = getAllFormData();
+    console.log(envSettings);
+    OptionClass.saveToStorageEnvSettings(envSettings);
+  });
 }
 
 // get env settings from storage
@@ -30,18 +31,42 @@ function getEnvSettings() {
   });
 }
 
-// get form data
-function getFormData() {
-  const envName = (document.getElementById("env_name") as HTMLInputElement)
-    .value;
-  const envUrl = (document.getElementById("env_url") as HTMLInputElement).value;
-  const message = (document.getElementById("message") as HTMLInputElement)
-    .value;
-  const envSettings: envSettings = {
-    envName: envName,
-    envUrl: envUrl,
-    message: message,
-  };
+/**
+ * get form all data
+ * @return {Array} envSettings - env settings
+ */
+function getAllFormData() {
+  const envSettingsTableBody = document.getElementById(
+    "env_settings_table_body"
+  ) as HTMLTableSectionElement;
+  const envSettingsTableRows = envSettingsTableBody.getElementsByClassName(
+    "env_settings_form_data"
+  );
+  const envSettings: envSettings[] = [];
+  // tr要素の数だけループ
+  for (let i = 0; i < envSettingsTableRows.length; i++) {
+    const envSettingsTableRow = envSettingsTableRows[i] as HTMLTableRowElement;
+    const envName = (
+      envSettingsTableRow.getElementsByClassName(
+        "env_name"
+      )[0] as HTMLInputElement
+    ).value;
+    const envUrl = (
+      envSettingsTableRow.getElementsByClassName(
+        "env_url"
+      )[0] as HTMLInputElement
+    ).value;
+    const message = (
+      envSettingsTableRow.getElementsByClassName(
+        "message"
+      )[0] as HTMLInputElement
+    ).value;
+    envSettings.push({
+      envName: envName,
+      envUrl: envUrl,
+      message: message,
+    });
+  }
   return envSettings;
 }
 
@@ -61,14 +86,19 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
   envSettingsTableBody.id = "env_settings_table_body";
 
   // create table row
-  envSettings.forEach((envSetting) => {
+  envSettings.forEach((envSetting, index) => {
     const envSettingsTableRow = document.createElement("tr");
-    envSettingsTableRow.classList.add("odd:bg-white", "even:bg-gray-50");
+    envSettingsTableRow.classList.add(
+      "odd:bg-white",
+      "even:bg-gray-50",
+      `env_${index}`,
+      "env_settings_form_data"
+    );
 
     // create table cell
-    const envNameCell = createTableCell(envSetting.envName);
-    const envUrlCell = createTableCell(envSetting.envUrl);
-    const messageCell = createTableCell(envSetting.message);
+    const envNameCell = createTableCell(envSetting.envName, "env_name");
+    const envUrlCell = createTableCell(envSetting.envUrl, "env_url");
+    const messageCell = createTableCell(envSetting.message, "message");
 
     // append table cell to table row
     envSettingsTableRow.appendChild(envNameCell);
@@ -83,13 +113,14 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
 }
 
 // create td element for env settings table
-function createTableCell(text: string) {
+function createTableCell(text: string, className?: string) {
   const cell = document.createElement("td");
   cell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
   // add input element
   const input = document.createElement("input");
   input.type = "text";
   input.classList.add(
+    `${className}`,
     "w-full",
     "appearance-none",
     "bg-transparent",

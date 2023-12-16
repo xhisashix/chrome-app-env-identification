@@ -21,15 +21,95 @@ class optionClass {
    */
   saveToStorageEnvSettings(value: Array<envSettings>): void {
     let envSettings: envSettingsArray = [];
-    // 既存のenv settingsを取得
-    this.getStorageEnvSettings((result: string) => {
-      envSettings = this.getEnvSettings(result); // Assign the existing env settings to envSettings
-      // 既存のenv settingsに新しいenv settingsを追加
-      envSettings.push(value[0]);
-      // env settingsをstorageに保存
-      this.saveToStorageEnvSettingsArray(envSettings);
-    });
+    if (value) {
+      envSettings = value;
+    }
+
+    // data to delete and insert
+    const deleteEnvSettings = this.getEnvSettingsFromStorage();
+    const insertEnvSettings = envSettings;
+
+    // delete and insert
+    this.deleteEnvSettings(deleteEnvSettings, insertEnvSettings);
+
+    // save to storage
+    this.saveToStorageEnvSettingsArray(envSettings);
   }
+
+  /**
+   * getEnvSettingsFromStorage - env settings get from storage
+   * @return {Array} envSettings - env settings
+   */
+  getEnvSettingsFromStorage(): envSettingsArray {
+    let envSettings: envSettingsArray = [];
+    this.getStorageEnvSettings(function (result: string) {
+      envSettings = JSON.parse(result);
+    });
+    return envSettings;
+  }
+
+  /**
+   * deleteEnvSettings - env settings delete from storage
+   * @param {Array} deleteEnvSettings - env settings to delete
+   * @param {Array} insertEnvSettings - env settings to insert
+   */
+  deleteEnvSettings(
+    deleteEnvSettings: envSettingsArray,
+    insertEnvSettings: envSettingsArray
+  ) {
+    // delete
+    for (let i = 0; i < deleteEnvSettings.length; i++) {
+      const deleteEnvSetting = deleteEnvSettings[i];
+      const deleteEnvName = deleteEnvSetting.envName;
+      const deleteEnvUrl = deleteEnvSetting.envUrl;
+      const deleteMessage = deleteEnvSetting.message;
+      let isDelete = true;
+      for (let j = 0; j < insertEnvSettings.length; j++) {
+        const insertEnvSetting = insertEnvSettings[j];
+        const insertEnvName = insertEnvSetting.envName;
+        const insertEnvUrl = insertEnvSetting.envUrl;
+        const insertMessage = insertEnvSetting.message;
+        if (
+          deleteEnvName === insertEnvName &&
+          deleteEnvUrl === insertEnvUrl &&
+          deleteMessage === insertMessage
+        ) {
+          isDelete = false;
+          break;
+        }
+      }
+      if (isDelete) {
+        this.deleteEnvSetting(deleteEnvSetting);
+      }
+    }
+  }
+
+  /**
+   * deleteEnvSetting - env setting delete from storage
+   * @param {Object} deleteEnvSetting - env setting to delete
+   */
+  deleteEnvSetting(deleteEnvSetting: envSettings) {
+    const deleteEnvName = deleteEnvSetting.envName;
+    const deleteEnvUrl = deleteEnvSetting.envUrl;
+    const deleteMessage = deleteEnvSetting.message;
+    const deleteEnvSettings = this.getEnvSettingsFromStorage();
+    for (let i = 0; i < deleteEnvSettings.length; i++) {
+      const deleteEnvSetting = deleteEnvSettings[i];
+      const envName = deleteEnvSetting.envName;
+      const envUrl = deleteEnvSetting.envUrl;
+      const message = deleteEnvSetting.message;
+      if (
+        deleteEnvName === envName &&
+        deleteEnvUrl === envUrl &&
+        deleteMessage === message
+      ) {
+        deleteEnvSettings.splice(i, 1);
+        break;
+      }
+    }
+    this.saveToStorageEnvSettingsArray(deleteEnvSettings);
+  }
+
   /**
    * Saves the envSettings array to storage.
    * @param envSettings - The array of envSettings to be saved.
