@@ -97,11 +97,22 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     const envNameCell = createTableCell(envSetting.envName, "env_name");
     const envUrlCell = createTableCell(envSetting.envUrl, "env_url");
     const messageCell = createTableCell(envSetting.message, "message");
+    const deleteCell = document.createElement("td");
+    deleteCell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
+    // add delete button
+    const deleteButton = createDeleteButton();
+    deleteButton.addEventListener("click", function () {
+      deleteEnvSettingsRow(index);
+    });
+
+    // append delete button to table cell
+    deleteCell.appendChild(deleteButton);
 
     // append table cell to table row
     envSettingsTableRow.appendChild(envNameCell);
     envSettingsTableRow.appendChild(envUrlCell);
     envSettingsTableRow.appendChild(messageCell);
+    envSettingsTableRow.appendChild(deleteCell);
 
     // append table row to table body
     envSettingsTableBody.appendChild(envSettingsTableRow);
@@ -139,6 +150,23 @@ function createTableCell(text: string, className?: string) {
   return cell;
 }
 
+// create button element for env settings table
+function createDeleteButton() {
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add(
+    "bg-red-500",
+    "hover:bg-red-700",
+    "text-white",
+    "font-bold",
+    "py-1",
+    "px-2",
+    "rounded"
+  );
+  deleteButton.type = "button";
+  deleteButton.innerText = "Delete";
+  return deleteButton;
+}
+
 // add env settings row
 function addEnvSettingsRow() {
   const envSettingsTableBody = document.getElementById(
@@ -163,6 +191,18 @@ function addEnvSettingsRow() {
 
   // append table row to table body
   envSettingsTableBody.appendChild(envSettingsTableRow);
+}
+
+// delete env settings row
+function deleteEnvSettingsRow(row_id: number) {
+  const envSettingsTableBody = document.getElementById(
+    "env_settings_table_body"
+  ) as HTMLTableSectionElement;
+  const envSettingsTableRow = document.getElementsByClassName(
+    `env_${row_id}`
+  )[0] as HTMLTableRowElement;
+
+  envSettingsTableBody.removeChild(envSettingsTableRow);
 }
 
 init();
