@@ -530,6 +530,9 @@ video {
     padding-left: 6rem;
   }
 }
+.fixed {
+  position: fixed;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
