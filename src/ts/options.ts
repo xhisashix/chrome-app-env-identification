@@ -70,13 +70,6 @@ function getAllFormData() {
   return envSettings;
 }
 
-// reset form data
-function resetFormData() {
-  (document.getElementById("env_name") as HTMLInputElement).value = "";
-  (document.getElementById("env_url") as HTMLInputElement).value = "";
-  (document.getElementById("message") as HTMLInputElement).value = "";
-}
-
 // create env settings table in options page
 function createEnvSettingsTableList(envSettings: envSettings[]) {
   const envSettingsTable = document.getElementById(
