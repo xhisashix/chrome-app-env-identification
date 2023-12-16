@@ -3,103 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>環境絵設定</title>
+    <title>環境設定</title>
     <link rel="stylesheet" href="../css/dist.css" />
   </head>
   <body>
     <main class="container mx-auto p-4 min-w-[600px] min-h-[300px]">
       <div class="main-section">
-        <div class="flex justify-between">
-          <h1 class="text-xl">環境設定</h1>
-          <button
-            id="add_env"
-            class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
-            type="button"
-          >
-            追加
-          </button>
-        </div>
         <div id="form_area" class="mt-4">
           <!-- tailwindcss form -->
           <form class="w-full" id="env_form">
-            <!-- tailwindcss table -->
-            <table class="table-auto w-full">
-              <thead>
-                <tr>
-                  <th class="px-4 py-2">環境名</th>
-                  <th class="px-4 py-2">URL</th>
-                  <th class="px-4 py-2">備考</th>
-                  <th class="px-4 py-2">削除</th>
-                </tr>
-              </thead>
-              <tbody id="env_list">
-                <tr>
-                  <td class="border px-4 py-2">
-                    <input
-                      class="appearance-none bg-transparent border border-solid border-gray-200 w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                      type="text"
-                      placeholder="Env name"
-                      aria-label="Env name"
-                      id="env_name"
-                    />
-                  </td>
-                  <td class="border px-4 py-2">
-                    <input
-                      class="appearance-none bg-transparent border border-solid border-gray-200 w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                      type="text"
-                      placeholder="URL"
-                      aria-label="URL"
-                      id="env_url"
-                    />
-                  </td>
-                  <td class="border px-4 py-2">
-                    <input
-                      class="appearance-none bg-transparent border border-solid border-gray-200 w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                      type="text"
-                      placeholder="備考"
-                      aria-label="備考"
-                      id="message"
-                    />
-                  </td>
-                  <td class="border px-4 py-2">
-                    <button
-                      class="flex-shrink-0 bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700 text-sm border-4 text-white py-1 px-2 rounded"
-                      type="button"
-                    >
-                      削除
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- save button -->
-            <div class="flex justify-end mt-4">
-              <button
-                id="save_env"
-                class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
-                type="button"
-              >
-                保存
-              </button>
+            <!-- env list -->
+            <div class="mt-4">
+              <h2 class="text-xl">環境一覧</h2>
+              <div id="env_list_area" class="mt-4">
+                <!-- tailwindcss table -->
+                <table class="table-auto w-full" id="env_settings_table">
+                  <thead>
+                    <tr>
+                      <th class="px-4 py-2">環境名</th>
+                      <th class="px-4 py-2">URL</th>
+                      <th class="px-4 py-2">備考</th>
+                    </tr>
+                  </thead>
+                  <tbody id="env_list"></tbody>
+                </table>
+              </div>
             </div>
-          </form>
-        </div>
-        <!-- env list -->
-        <div class="mt-4">
-          <h2 class="text-xl">環境一覧</h2>
-          <div id="env_list_area" class="mt-4">
-            <!-- tailwindcss table -->
-            <table class="table-auto w-full" id="env_settings_table">
-              <thead>
-                <tr>
-                  <th class="px-4 py-2">環境名</th>
-                  <th class="px-4 py-2">URL</th>
-                  <th class="px-4 py-2">備考</th>
-                </tr>
-              </thead>
-              <tbody id="env_list"></tbody>
-            </table>
+            <div class="mt-6">
+              <button
+              id="save_env"
+              class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
+              type="button"
+              >
+              保存
+            </button>
           </div>
+          </form>
         </div>
       </div>
     </main>

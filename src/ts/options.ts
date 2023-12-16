@@ -15,11 +15,11 @@ function init() {
 
 // event handlers setting
 function setupEventHandlers() {
-  const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
-  saveEnv.addEventListener("click", function () {
-    OptionClass.saveToStorageEnvSettings([getFormData()]);
-    resetFormData();
-  });
+  // const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
+  // saveEnv.addEventListener("click", function () {
+  //   OptionClass.saveToStorageEnvSettings([getFormData()]);
+  //   resetFormData();
+  // });
 }
 
 // get env settings from storage
@@ -63,8 +63,7 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
   // create table row
   envSettings.forEach((envSetting) => {
     const envSettingsTableRow = document.createElement("tr");
-    envSettingsTableRow.classList.add("odd:bg-white", "even:bg-blue-100");
-    envSettingsTableRow.id = "env_settings_table_row";
+    envSettingsTableRow.classList.add("odd:bg-white", "even:bg-gray-50");
 
     // create table cell
     const envNameCell = createTableCell(envSetting.envName);
@@ -86,9 +85,10 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
 // create td element for env settings table
 function createTableCell(text: string) {
   const cell = document.createElement("td");
-  cell.classList.add("border-t", "px-4", "py-2", "border-gray-400");
+  cell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
   // add input element
   const input = document.createElement("input");
+  input.type = "text";
   input.classList.add(
     "w-full",
     "appearance-none",
