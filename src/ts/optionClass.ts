@@ -4,6 +4,7 @@ interface envSettings {
   envName: string;
   envUrl: string;
   message: string;
+  color: string;
 }
 
 type envSettingsArray = Array<envSettings>;
@@ -62,6 +63,7 @@ class optionClass {
       const deleteEnvSetting = deleteEnvSettings[i];
       const deleteEnvName = deleteEnvSetting.envName;
       const deleteEnvUrl = deleteEnvSetting.envUrl;
+      const color = deleteEnvSetting.color;
       const deleteMessage = deleteEnvSetting.message;
       let isDelete = true;
       for (let j = 0; j < insertEnvSettings.length; j++) {
@@ -69,10 +71,12 @@ class optionClass {
         const insertEnvName = insertEnvSetting.envName;
         const insertEnvUrl = insertEnvSetting.envUrl;
         const insertMessage = insertEnvSetting.message;
+        const insertColor = insertEnvSetting.color;
         if (
           deleteEnvName === insertEnvName &&
           deleteEnvUrl === insertEnvUrl &&
-          deleteMessage === insertMessage
+          deleteMessage === insertMessage &&
+          color === insertColor
         ) {
           isDelete = false;
           break;
@@ -92,16 +96,19 @@ class optionClass {
     const deleteEnvName = deleteEnvSetting.envName;
     const deleteEnvUrl = deleteEnvSetting.envUrl;
     const deleteMessage = deleteEnvSetting.message;
+    const deleteColor = deleteEnvSetting.color;
     const deleteEnvSettings = this.getEnvSettingsFromStorage();
     for (let i = 0; i < deleteEnvSettings.length; i++) {
       const deleteEnvSetting = deleteEnvSettings[i];
       const envName = deleteEnvSetting.envName;
       const envUrl = deleteEnvSetting.envUrl;
       const message = deleteEnvSetting.message;
+      const color = deleteEnvSetting.color;
       if (
         deleteEnvName === envName &&
         deleteEnvUrl === envUrl &&
-        deleteMessage === message
+        deleteMessage === message &&
+        deleteColor === color
       ) {
         deleteEnvSettings.splice(i, 1);
         break;

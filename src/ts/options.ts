@@ -6,6 +6,7 @@ interface envSettings {
   envName: string;
   envUrl: string;
   message: string;
+  color: string;
 }
 
 function init() {
@@ -67,10 +68,14 @@ function getAllFormData() {
         "message"
       )[0] as HTMLInputElement
     ).value;
+    const color = (
+      envSettingsTableRow.getElementsByClassName("color")[0] as HTMLInputElement
+    ).value;
     envSettings.push({
       envName: envName,
       envUrl: envUrl,
       message: message,
+      color: color,
     });
   }
   return envSettings;
@@ -98,6 +103,7 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     const envNameCell = createTableCell(envSetting.envName, "env_name");
     const envUrlCell = createTableCell(envSetting.envUrl, "env_url");
     const messageCell = createTableCell(envSetting.message, "message");
+    const colorCell = createColorCell(envSetting.color);
     const deleteCell = document.createElement("td");
     deleteCell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
     // add delete button
@@ -113,6 +119,7 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     envSettingsTableRow.appendChild(envNameCell);
     envSettingsTableRow.appendChild(envUrlCell);
     envSettingsTableRow.appendChild(messageCell);
+    envSettingsTableRow.appendChild(colorCell);
     envSettingsTableRow.appendChild(deleteCell);
 
     // append table row to table body
@@ -151,6 +158,42 @@ function createTableCell(text: string, className?: string) {
   return cell;
 }
 
+// create td element for select color
+function createColorCell(value?: string) {
+  const cell = document.createElement("td");
+  cell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
+  // add input element
+  const select = document.createElement("select");
+  select.classList.add(
+    "color",
+    "w-full",
+    "appearance-none",
+    "bg-transparent",
+    "border",
+    "border-solid",
+    "border-gray-400",
+    "text-gray-700",
+    "mr-3",
+    "py-1",
+    "px-2",
+    "leading-tight",
+    "focus:outline-none"
+  );
+
+  select.options.add(new Option("red", "red"));
+  select.options.add(new Option("blue", "blue"));
+  select.options.add(new Option("green", "green"));
+  select.options.add(new Option("yellow", "yellow"));
+  select.options.add(new Option("gray", "gray"));
+
+  if (value) {
+    select.value = value;
+  }
+  // add input element to td element
+  cell.appendChild(select);
+  return cell;
+}
+
 // create button element for env settings table
 function createDeleteButton() {
   const deleteButton = document.createElement("button");
@@ -184,11 +227,13 @@ function addEnvSettingsRow() {
   const envNameCell = createTableCell("", "env_name");
   const envUrlCell = createTableCell("", "env_url");
   const messageCell = createTableCell("", "message");
+  const colorCell = createTableCell("", "color");
 
   // append table cell to table row
   envSettingsTableRow.appendChild(envNameCell);
   envSettingsTableRow.appendChild(envUrlCell);
   envSettingsTableRow.appendChild(messageCell);
+  envSettingsTableRow.appendChild(colorCell);
 
   // append table row to table body
   envSettingsTableBody.appendChild(envSettingsTableRow);

@@ -4,6 +4,7 @@ interface envSettings {
   envName: string;
   envUrl: string;
   message: string;
+  color: string;
 }
 
 chrome.action.onClicked.addListener(function () {
