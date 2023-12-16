@@ -27,8 +27,8 @@ async function getEnvSettings(currentTabUrl: string) {
     const envSettings = getEnvSettingsArray(result);
     const tabUrl = currentTabUrl;
     const envUrl = getEnvUrl(envSettings, tabUrl);
+    const envSetting = getEnv(envSettings, tabUrl);
     if (envUrl) {
-      console.log("ON");
       chrome.action.setBadgeText({ text: "ON" });
       chrome.action.setBadgeBackgroundColor({ color: "#4688F1" });
 
@@ -39,9 +39,9 @@ async function getEnvSettings(currentTabUrl: string) {
           target: { tabId },
           files: ["/js/content.js"],
         });
+        chrome.tabs.sendMessage(tabId, { envSettings: envSetting });
       });
     } else {
-      console.log("OFF");
       chrome.action.setBadgeText({ text: "OFF" });
       chrome.action.setBadgeBackgroundColor({ color: "#FF0000" });
     }
@@ -54,11 +54,21 @@ function getEnvUrl(envSettings: envSettings[], tabUrl: string): string {
   for (let i = 0; i < envSettings.length; i++) {
     if (checkIncludeUrl(envSettings[i].envUrl, tabUrl)) {
       envUrl = envSettings[i].envUrl;
-      console.log(envUrl);
       break;
     }
   }
   return envUrl;
+}
+
+function getEnv(envSettings: envSettings[], tabUrl: string): envSettings {
+  let envSetting = {} as envSettings;
+  for (let i = 0; i < envSettings.length; i++) {
+    if (checkIncludeUrl(envSettings[i].envUrl, tabUrl)) {
+      envSetting = envSettings[i];
+      break;
+    }
+  }
+  return envSetting;
 }
 
 // get env settings from storage
