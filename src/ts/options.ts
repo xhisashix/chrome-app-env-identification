@@ -20,6 +20,7 @@ function setupEventHandlers() {
     const envSettings = getAllFormData();
     console.log(envSettings);
     OptionClass.saveToStorageEnvSettings(envSettings);
+    flashMessage();
   });
 
   const addEnv = document.getElementById("add_env") as HTMLButtonElement;
@@ -203,6 +204,15 @@ function deleteEnvSettingsRow(row_id: number) {
   )[0] as HTMLTableRowElement;
 
   envSettingsTableBody.removeChild(envSettingsTableRow);
+}
+
+// flash message for save env settings
+function flashMessage() {
+  const flashMessage = document.getElementById("flash_message") as HTMLElement;
+  flashMessage.classList.remove("hidden");
+  setTimeout(function () {
+    flashMessage.classList.add("hidden");
+  }, 2000);
 }
 
 init();

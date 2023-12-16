@@ -16,6 +16,12 @@
             <div class="mt-4">
               <h2 class="text-xl">環境一覧</h2>
               <div id="env_list_area" class="mt-4">
+                <!-- tailwind flash message -->
+                <div
+                  id="flash_message"
+                  class="hidden bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3"
+                  role="alert"
+                >保存しました。</div>
                 <!-- tailwindcss table -->
                 <table class="table-auto w-full" id="env_settings_table">
                   <thead>
@@ -40,10 +46,10 @@
               </button>
               <button
                 id="add_env"
-                class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
+                class="flex-shrink-0 bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 text-sm border-4 text-white py-1 px-2 rounded"
                 type="button"
               >
-                追加
+                設定を追加
               </button>
             </div>
           </form>
