@@ -21,6 +21,11 @@ function setupEventHandlers() {
     console.log(envSettings);
     OptionClass.saveToStorageEnvSettings(envSettings);
   });
+
+  const addEnv = document.getElementById("add_env") as HTMLButtonElement;
+  addEnv.addEventListener("click", function () {
+    addEnvSettingsRow();
+  });
 }
 
 // get env settings from storage
@@ -132,6 +137,32 @@ function createTableCell(text: string, className?: string) {
   // add input element to td element
   cell.appendChild(input);
   return cell;
+}
+
+// add env settings row
+function addEnvSettingsRow() {
+  const envSettingsTableBody = document.getElementById(
+    "env_settings_table_body"
+  ) as HTMLTableSectionElement;
+  const envSettingsTableRow = document.createElement("tr");
+  envSettingsTableRow.classList.add(
+    "odd:bg-white",
+    "even:bg-gray-50",
+    "env_settings_form_data"
+  );
+
+  // create table cell
+  const envNameCell = createTableCell("", "env_name");
+  const envUrlCell = createTableCell("", "env_url");
+  const messageCell = createTableCell("", "message");
+
+  // append table cell to table row
+  envSettingsTableRow.appendChild(envNameCell);
+  envSettingsTableRow.appendChild(envUrlCell);
+  envSettingsTableRow.appendChild(messageCell);
+
+  // append table row to table body
+  envSettingsTableBody.appendChild(envSettingsTableRow);
 }
 
 init();
