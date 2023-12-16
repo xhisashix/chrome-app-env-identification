@@ -1,6 +1,5 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.envSettings) {
-    console.log("Received envSettings: ", request.envSettings);
     const envSettings = request.envSettings;
 
     const envName = envSettings.envName || "";
