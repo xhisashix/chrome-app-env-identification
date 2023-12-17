@@ -3,6 +3,11 @@
   "name": "Environmental Identification",
   "version": "1.0.0",
   "description": "Identify the environmental impact of your web browsing",
+  "icons": {
+    "128": "./img/icon/icon128.png",
+    "48": "./img/icon/icon48.png",
+    "16": "./img/icon/icon16.png"
+  },
   "action": {},
   "background": {
     "service_worker": "./js/background.js"
