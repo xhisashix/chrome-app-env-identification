@@ -101,9 +101,9 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
 
     // create table cell
     const envNameCell = createTableCell(envSetting.envName, "env_name");
-    const envUrlCell = createTableCell(envSetting.envUrl, "env_url");
+    const envUrlCell = createTableCell(envSetting.envUrl, "env_url", "url");
     const messageCell = createTableCell(envSetting.message, "message");
-    const colorCell = createColorCell(envSetting.color);
+    const colorCell = createTableCell(envSetting.color, "color", "select");
     const deleteCell = document.createElement("td");
     deleteCell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
     // add delete button
@@ -130,13 +130,39 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
 }
 
 // create td element for env settings table
-function createTableCell(text: string, className?: string) {
+function createTableCell(
+  text: string,
+  className?: string,
+  type: string = "text"
+) {
   const cell = document.createElement("td");
   cell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
-  // add input element
-  const input = document.createElement("input");
-  input.type = "text";
-  input.classList.add(
+
+  let inputElement: HTMLInputElement | HTMLSelectElement;
+  if (type === "text") {
+    inputElement = document.createElement("input");
+    inputElement.type = "text";
+    inputElement.value = text;
+  } else if (type === "select") {
+    inputElement = document.createElement("select");
+    inputElement.options.add(new Option("背景色を選択", ""));
+    inputElement.options.add(new Option("red", "red"));
+    inputElement.options.add(new Option("blue", "blue"));
+    inputElement.options.add(new Option("green", "green"));
+    inputElement.options.add(new Option("yellow", "yellow"));
+    inputElement.options.add(new Option("gray", "gray"));
+
+    if (text) {
+      inputElement.value = text;
+    }
+  } else {
+    inputElement = document.createElement("input");
+    inputElement.type = "url";
+    inputElement.placeholder = "https://example.com";
+    inputElement.value = text;
+  }
+
+  inputElement.classList.add(
     `${className}`,
     "w-full",
     "appearance-none",
@@ -152,47 +178,8 @@ function createTableCell(text: string, className?: string) {
     "leading-tight",
     "focus:outline-none"
   );
-  input.value = text;
-
   // add input element to td element
-  cell.appendChild(input);
-  return cell;
-}
-
-// create td element for select color
-function createColorCell(value?: string) {
-  const cell = document.createElement("td");
-  cell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
-  // add input element
-  const select = document.createElement("select");
-  select.classList.add(
-    "color",
-    "w-full",
-    "appearance-none",
-    "bg-transparent",
-    "border",
-    "border-solid",
-    "border-gray-400",
-    "rounded",
-    "text-gray-700",
-    "mr-3",
-    "py-1",
-    "px-2",
-    "leading-tight",
-    "focus:outline-none"
-  );
-
-  select.options.add(new Option("red", "red"));
-  select.options.add(new Option("blue", "blue"));
-  select.options.add(new Option("green", "green"));
-  select.options.add(new Option("yellow", "yellow"));
-  select.options.add(new Option("gray", "gray"));
-
-  if (value) {
-    select.value = value;
-  }
-  // add input element to td element
-  cell.appendChild(select);
+  cell.appendChild(inputElement);
   return cell;
 }
 
@@ -227,9 +214,9 @@ function addEnvSettingsRow() {
 
   // create table cell
   const envNameCell = createTableCell("", "env_name");
-  const envUrlCell = createTableCell("", "env_url");
+  const envUrlCell = createTableCell("", "env_url", "url");
   const messageCell = createTableCell("", "message");
-  const colorCell = createColorCell();
+  const colorCell = createTableCell("", "color", "select");
   // append table cell to table row
   envSettingsTableRow.appendChild(envNameCell);
   envSettingsTableRow.appendChild(envUrlCell);
