@@ -229,8 +229,7 @@ function addEnvSettingsRow() {
   const envNameCell = createTableCell("", "env_name");
   const envUrlCell = createTableCell("", "env_url");
   const messageCell = createTableCell("", "message");
-  const colorCell = createTableCell("", "color");
-
+  const colorCell = createColorCell();
   // append table cell to table row
   envSettingsTableRow.appendChild(envNameCell);
   envSettingsTableRow.appendChild(envUrlCell);
