@@ -1,5 +1,5 @@
 import Storage from "./storageClass";
-
+import backgroundClass from "./backgroundClass";
 interface envSettings {
   envName: string;
   envUrl: string;
@@ -12,6 +12,7 @@ chrome.action.onClicked.addListener(function () {
 });
 
 const storage = new Storage();
+const BackgroundClass = new backgroundClass();
 
 // tabがアクティブになった時のイベント
 chrome.tabs.onActivated.addListener(function (activeInfo) {
@@ -25,10 +26,10 @@ chrome.tabs.onActivated.addListener(function (activeInfo) {
 // get env settings from storage
 async function getEnvSettings(currentTabUrl: string) {
   await storage.getStorage("env_settings", function (result: string) {
-    const envSettings = getEnvSettingsArray(result);
+    const envSettings = BackgroundClass.getEnvSettingsArray(result);
     const tabUrl = currentTabUrl;
-    const envUrl = getEnvUrl(envSettings, tabUrl);
-    const envSetting = getEnv(envSettings, tabUrl);
+    const envUrl = BackgroundClass.getEnvUrl(envSettings, tabUrl);
+    const envSetting = BackgroundClass.getEnv(envSettings, tabUrl);
     if (envUrl) {
       chrome.action.setBadgeText({ text: "ON" });
       chrome.action.setBadgeBackgroundColor({ color: "#4688F1" });
@@ -40,53 +41,18 @@ async function getEnvSettings(currentTabUrl: string) {
           target: { tabId },
           files: ["/js/content.js"],
         });
-        chrome.tabs.sendMessage(tabId, { envSettings: envSetting });
+        chrome.tabs.sendMessage(tabId, { envSettings: envSetting }).then(
+          (response) => {},
+          (error) => {
+            console.log(error);
+          }
+        );
       });
     } else {
       chrome.action.setBadgeText({ text: "OFF" });
       chrome.action.setBadgeBackgroundColor({ color: "#FF0000" });
     }
   });
-}
-
-// get env url
-function getEnvUrl(envSettings: envSettings[], tabUrl: string): string {
-  let envUrl = "";
-  for (let i = 0; i < envSettings.length; i++) {
-    if (checkIncludeUrl(envSettings[i].envUrl, tabUrl)) {
-      envUrl = envSettings[i].envUrl;
-      break;
-    }
-  }
-  return envUrl;
-}
-
-function getEnv(envSettings: envSettings[], tabUrl: string): envSettings {
-  let envSetting = {} as envSettings;
-  for (let i = 0; i < envSettings.length; i++) {
-    if (checkIncludeUrl(envSettings[i].envUrl, tabUrl)) {
-      envSetting = envSettings[i];
-      break;
-    }
-  }
-  return envSetting;
-}
-
-// get env settings from storage
-function getEnvSettingsArray(result: string): envSettings[] {
-  if (result) {
-    return JSON.parse(result);
-  } else {
-    return [];
-  }
-}
-
-// check include env url
-function checkIncludeUrl(envUrl: string, tabUrl: string) {
-  if (tabUrl === undefined) {
-    return false;
-  }
-  return tabUrl.includes(envUrl);
 }
 
 // ページの背景を変更する
