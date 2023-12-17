@@ -89,32 +89,40 @@ class optionClass {
   }
 
   /**
-   * deleteEnvSetting - env setting delete from storage
-   * @param {Object} deleteEnvSetting - env setting to delete
+   * deleteEnvSetting - Deletes a specific environment setting from storage.
+   * @param {envSettings} settingToDelete - The environment setting to delete.
    */
-  deleteEnvSetting(deleteEnvSetting: envSettings) {
-    const deleteEnvName = deleteEnvSetting.envName;
-    const deleteEnvUrl = deleteEnvSetting.envUrl;
-    const deleteMessage = deleteEnvSetting.message;
-    const deleteColor = deleteEnvSetting.color;
-    const deleteEnvSettings = this.getEnvSettingsFromStorage();
-    for (let i = 0; i < deleteEnvSettings.length; i++) {
-      const deleteEnvSetting = deleteEnvSettings[i];
-      const envName = deleteEnvSetting.envName;
-      const envUrl = deleteEnvSetting.envUrl;
-      const message = deleteEnvSetting.message;
-      const color = deleteEnvSetting.color;
-      if (
-        deleteEnvName === envName &&
-        deleteEnvUrl === envUrl &&
-        deleteMessage === message &&
-        deleteColor === color
-      ) {
-        deleteEnvSettings.splice(i, 1);
-        break;
-      }
-    }
-    this.saveToStorageEnvSettingsArray(deleteEnvSettings);
+  deleteEnvSetting(settingToDelete: envSettings): void {
+    this.getEnvSettingsFromStorageAsync().then((envSettings) => {
+      const updatedEnvSettings = envSettings.filter(
+        (setting) => !this.areSettingsEqual(setting, settingToDelete)
+      );
+
+      this.saveToStorageEnvSettingsArray(updatedEnvSettings);
+    });
+  }
+
+  /**
+   * Compares two environment settings to determine if they are equal.
+   * @param {envSettings} setting1 - First environment setting.
+   * @param {envSettings} setting2 - Second environment setting.
+   * @return {boolean} - Returns true if settings are equal.
+   */
+  private areSettingsEqual(
+    setting1: envSettings,
+    setting2: envSettings
+  ): boolean {
+    return (
+      setting1.envName === setting2.envName &&
+      setting1.envUrl === setting2.envUrl &&
+      setting1.message === setting2.message &&
+      setting1.color === setting2.color
+    );
+  }
+
+  private async getEnvSettingsFromStorageAsync(): Promise<envSettingsArray> {
+    const result = await this.storage.getStorageAsync("env_settings");
+    return result ? (JSON.parse(result) as envSettingsArray) : [];
   }
 
   /**
