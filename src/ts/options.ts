@@ -196,7 +196,7 @@ function createDeleteButton() {
     "rounded"
   );
   deleteButton.type = "button";
-  deleteButton.innerText = "Delete";
+  deleteButton.innerText = "削除";
   return deleteButton;
 }
 
