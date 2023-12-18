@@ -3,6 +3,7 @@ import optionClass from "./optionClass";
 const OptionClass = new optionClass();
 
 interface envSettings {
+  projectName: string;
   envName: string;
   envUrl: string;
   message: string;
@@ -53,6 +54,11 @@ function getAllFormData() {
   // tr要素の数だけループ
   for (let i = 0; i < envSettingsTableRows.length; i++) {
     const envSettingsTableRow = envSettingsTableRows[i] as HTMLTableRowElement;
+    const projectName = (
+      envSettingsTableRow.getElementsByClassName(
+        "project_name"
+      )[0] as HTMLInputElement
+    ).value;
     const envName = (
       envSettingsTableRow.getElementsByClassName(
         "env_name"
@@ -72,6 +78,7 @@ function getAllFormData() {
       envSettingsTableRow.getElementsByClassName("color")[0] as HTMLInputElement
     ).value;
     envSettings.push({
+      projectName: projectName,
       envName: envName,
       envUrl: envUrl,
       message: message,
@@ -100,6 +107,7 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     );
 
     // create table cell
+    const projectNameCell = createTableCell(envSetting.projectName, "project_name");
     const envNameCell = createTableCell(envSetting.envName, "env_name");
     const envUrlCell = createTableCell(envSetting.envUrl, "env_url", "url");
     const messageCell = createTableCell(envSetting.message, "message");
@@ -116,6 +124,7 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     deleteCell.appendChild(deleteButton);
 
     // append table cell to table row
+    envSettingsTableRow.appendChild(projectNameCell);
     envSettingsTableRow.appendChild(envNameCell);
     envSettingsTableRow.appendChild(envUrlCell);
     envSettingsTableRow.appendChild(messageCell);
@@ -142,7 +151,7 @@ function createTableCell(
   if (type === "text") {
     inputElement = document.createElement("input");
     inputElement.type = "text";
-    inputElement.value = text;
+    inputElement.value = text || "";
   } else if (type === "select") {
     inputElement = document.createElement("select");
     inputElement.options.add(new Option("背景色を選択", ""));
@@ -213,11 +222,13 @@ function addEnvSettingsRow() {
   );
 
   // create table cell
+  const projectNameCell = createTableCell("", "project_name");
   const envNameCell = createTableCell("", "env_name");
   const envUrlCell = createTableCell("", "env_url", "url");
   const messageCell = createTableCell("", "message");
   const colorCell = createTableCell("", "color", "select");
   // append table cell to table row
+  envSettingsTableRow.appendChild(projectNameCell);
   envSettingsTableRow.appendChild(envNameCell);
   envSettingsTableRow.appendChild(envUrlCell);
   envSettingsTableRow.appendChild(messageCell);

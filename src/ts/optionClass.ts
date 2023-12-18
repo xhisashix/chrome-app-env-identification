@@ -1,6 +1,7 @@
 import storageClass from "./storageClass";
 
 interface envSettings {
+  projectName: string;
   envName: string;
   envUrl: string;
   message: string;
@@ -61,6 +62,7 @@ class optionClass {
     // delete
     for (let i = 0; i < deleteEnvSettings.length; i++) {
       const deleteEnvSetting = deleteEnvSettings[i];
+      const deleteProjectName = deleteEnvSetting.projectName;
       const deleteEnvName = deleteEnvSetting.envName;
       const deleteEnvUrl = deleteEnvSetting.envUrl;
       const color = deleteEnvSetting.color;
@@ -68,11 +70,13 @@ class optionClass {
       let isDelete = true;
       for (let j = 0; j < insertEnvSettings.length; j++) {
         const insertEnvSetting = insertEnvSettings[j];
+        const insertProjectName = insertEnvSetting.projectName;
         const insertEnvName = insertEnvSetting.envName;
         const insertEnvUrl = insertEnvSetting.envUrl;
         const insertMessage = insertEnvSetting.message;
         const insertColor = insertEnvSetting.color;
         if (
+          deleteProjectName === insertProjectName &&
           deleteEnvName === insertEnvName &&
           deleteEnvUrl === insertEnvUrl &&
           deleteMessage === insertMessage &&
@@ -113,6 +117,7 @@ class optionClass {
     setting2: envSettings
   ): boolean {
     return (
+      setting1.projectName === setting2.projectName &&
       setting1.envName === setting2.envName &&
       setting1.envUrl === setting2.envUrl &&
       setting1.message === setting2.message &&
