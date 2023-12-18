@@ -10,12 +10,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
-function applyTestEnvironmentIndicator(envName: string, message: string, color: string): void {
+function applyTestEnvironmentIndicator(
+  envName: string,
+  message: string,
+  color: string
+): void {
+
+  const messageDiv = document.createElement("div");
+  messageDiv.id = "test-environment-indicator";
+  messageDiv.innerHTML = `${envName} : ${message}`;
   const style = document.createElement("style");
   style.type = "text/css";
   style.innerHTML = `
-    body::after {
-      content: "${envName} : ${message}";
+    #test-environment-indicator {
       position: fixed;
       width: 100vw;
       top: auto;
@@ -24,11 +31,11 @@ function applyTestEnvironmentIndicator(envName: string, message: string, color: 
       padding: 10px;
       background-color: ${colorSelector(color)};
       color: white;
-      font-weight: bold;
       font-size: 36px;
       z-index: 999999;
     }
   `;
+  document.body.appendChild(messageDiv);
   document.head.appendChild(style);
 }
 
@@ -42,6 +49,8 @@ function colorSelector(color: string): string {
       return "rgba(0, 255, 0, 0.7)";
     case "yellow":
       return "rgba(255, 255, 0, 0.7)";
+    case "gray":
+      return "rgba(128, 128, 128, 0.7)";
     default:
       return "rgba(255, 0, 0, 0.7)";
   }
