@@ -20,6 +20,13 @@ function setupEventHandlers() {
   const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
   saveEnv.addEventListener("click", function () {
     const envSettings = getAllFormData();
+
+    if(!OptionClass.validateHttpOrHttps(envSettings)) {
+      // return error message
+      alert("URLはhttp://またはhttpsから始まる必要があります。");
+      return;
+    }
+
     console.log(envSettings);
     OptionClass.saveToStorageEnvSettings(envSettings);
     flashMessage();
@@ -107,7 +114,10 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     );
 
     // create table cell
-    const projectNameCell = createTableCell(envSetting.projectName, "project_name");
+    const projectNameCell = createTableCell(
+      envSetting.projectName,
+      "project_name"
+    );
     const envNameCell = createTableCell(envSetting.envName, "env_name");
     const envUrlCell = createTableCell(envSetting.envUrl, "env_url", "url");
     const messageCell = createTableCell(envSetting.message, "message");

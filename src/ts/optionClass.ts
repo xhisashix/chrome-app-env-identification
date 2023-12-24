@@ -158,6 +158,27 @@ class optionClass {
   getStorageEnvSettings(callback: (result: string) => void) {
     this.storage.getStorage("env_settings", callback);
   }
+
+  /**
+   * validate http or https
+   * @param {array} envSettings - env settings
+   * @return {boolean} - true or false
+   */
+  validateHttpOrHttps(envSettings: envSettings[]): boolean {
+    let isValidate = true;
+    for (let i = 0; i < envSettings.length; i++) {
+      const envSetting = envSettings[i];
+      const envUrl = envSetting.envUrl;
+      if (
+        envUrl.indexOf("http://") === -1 &&
+        envUrl.indexOf("https://") === -1
+      ) {
+        isValidate = false;
+        break;
+      }
+    }
+    return isValidate;
+  }
 }
 
 export default optionClass;
