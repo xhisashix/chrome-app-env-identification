@@ -20,12 +20,13 @@ function setupEventHandlers() {
   const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
   saveEnv.addEventListener("click", function () {
     const envSettings = getAllFormData();
+    const validateResult = OptionClass.validateHttpOrHttps(envSettings);
 
-    if (OptionClass.validateHttpOrHttps(envSettings) !== -1) {
+    if (validateResult !== -1) {
       // return error message
       alert(
         `${
-          OptionClass.validateHttpOrHttps(envSettings) + 1
+          validateResult + 1
         }行目のURLはhttp://またはhttpsから始まる必要があります。`
       );
 
@@ -38,7 +39,7 @@ function setupEventHandlers() {
       );
 
       const errorRow = envSettingsTableRows[
-        OptionClass.validateHttpOrHttps(envSettings)
+        validateResult
       ] as HTMLTableRowElement;
       const errorInput = errorRow.getElementsByClassName(
         "env_url"
