@@ -21,9 +21,31 @@ function setupEventHandlers() {
   saveEnv.addEventListener("click", function () {
     const envSettings = getAllFormData();
 
-    if(!OptionClass.validateHttpOrHttps(envSettings)) {
+    if (OptionClass.validateHttpOrHttps(envSettings) !== -1) {
       // return error message
-      alert("URLはhttp://またはhttpsから始まる必要があります。");
+      alert(
+        `${
+          OptionClass.validateHttpOrHttps(envSettings) + 1
+        }行目のURLはhttp://またはhttpsから始まる必要があります。`
+      );
+
+      // Add focus to the input element of the line that caused the error
+      const envSettingsTableBody = document.getElementById(
+        "env_settings_table_body"
+      ) as HTMLTableSectionElement;
+      const envSettingsTableRows = envSettingsTableBody.getElementsByClassName(
+        "env_settings_form_data"
+      );
+
+      const errorRow = envSettingsTableRows[
+        OptionClass.validateHttpOrHttps(envSettings)
+      ] as HTMLTableRowElement;
+      const errorInput = errorRow.getElementsByClassName(
+        "env_url"
+      )[0] as HTMLInputElement;
+      errorInput.classList.add("border-red-500");
+      errorInput.focus();
+
       return;
     }
 
