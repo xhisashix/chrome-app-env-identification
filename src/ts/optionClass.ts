@@ -162,10 +162,10 @@ class optionClass {
   /**
    * validate http or https
    * @param {array} envSettings - env settings
-   * @return {boolean} - true or false
+   * @return {number} validateItem - validate result
    */
-  validateHttpOrHttps(envSettings: envSettings[]): boolean {
-    let isValidate = true;
+  validateHttpOrHttps(envSettings: envSettings[]) {
+    let validateItem = -1;
     for (let i = 0; i < envSettings.length; i++) {
       const envSetting = envSettings[i];
       const envUrl = envSetting.envUrl;
@@ -173,11 +173,11 @@ class optionClass {
         envUrl.indexOf("http://") === -1 &&
         envUrl.indexOf("https://") === -1
       ) {
-        isValidate = false;
+        validateItem = i;
         break;
       }
     }
-    return isValidate;
+    return validateItem;
   }
 }
 
