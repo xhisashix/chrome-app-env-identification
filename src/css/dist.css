@@ -616,6 +616,12 @@ video {
      -moz-appearance: none;
           appearance: none;
 }
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
 .rounded {
   border-radius: 0.25rem;
 }

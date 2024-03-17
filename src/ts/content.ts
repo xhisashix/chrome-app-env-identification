@@ -4,9 +4,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     const projectName = envSettings.projectName || "";
     const envName = envSettings.envName || "";
-    const envUrl = envSettings.envUrl;
     const message = envSettings.message || "備考なし";
     const color = envSettings.color || "red";
+    const activeFlag = envSettings.activeFlag || false;
+    if(!activeFlag) {
+      return;
+    }
     applyTestEnvironmentIndicator(projectName, envName, message, color);
   }
 });
