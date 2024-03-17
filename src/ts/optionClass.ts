@@ -6,6 +6,7 @@ interface envSettings {
   envUrl: string;
   message: string;
   color: string;
+  activeFlag: boolean;
 }
 
 type envSettingsArray = Array<envSettings>;
@@ -67,6 +68,7 @@ class optionClass {
       const deleteEnvUrl = deleteEnvSetting.envUrl;
       const color = deleteEnvSetting.color;
       const deleteMessage = deleteEnvSetting.message;
+      const activeFlag = deleteEnvSetting.activeFlag;
       let isDelete = true;
       for (let j = 0; j < insertEnvSettings.length; j++) {
         const insertEnvSetting = insertEnvSettings[j];
@@ -75,12 +77,14 @@ class optionClass {
         const insertEnvUrl = insertEnvSetting.envUrl;
         const insertMessage = insertEnvSetting.message;
         const insertColor = insertEnvSetting.color;
+        const insertActiveFlag = insertEnvSetting.activeFlag;
         if (
           deleteProjectName === insertProjectName &&
           deleteEnvName === insertEnvName &&
           deleteEnvUrl === insertEnvUrl &&
           deleteMessage === insertMessage &&
-          color === insertColor
+          color === insertColor &&
+          activeFlag === insertActiveFlag
         ) {
           isDelete = false;
           break;
@@ -121,7 +125,8 @@ class optionClass {
       setting1.envName === setting2.envName &&
       setting1.envUrl === setting2.envUrl &&
       setting1.message === setting2.message &&
-      setting1.color === setting2.color
+      setting1.color === setting2.color &&
+      setting1.activeFlag === setting2.activeFlag
     );
   }
 
