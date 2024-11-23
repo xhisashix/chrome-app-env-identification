@@ -33,7 +33,7 @@ function applyTestEnvironmentIndicator(
       bottom: 0;
       left: 0;
       padding: 10px;
-      background-color: ${colorSelector(color)};
+      background-color: ${color};
       color: white;
       font-size: 36px;
       z-index: 999999;
@@ -41,21 +41,4 @@ function applyTestEnvironmentIndicator(
   `;
   document.body.appendChild(messageDiv);
   document.head.appendChild(style);
-}
-
-function colorSelector(color: string): string {
-  switch (color) {
-    case "red":
-      return "rgba(255, 0, 0, 0.7)";
-    case "blue":
-      return "rgba(0, 0, 255, 0.7)";
-    case "green":
-      return "rgba(0, 255, 0, 0.7)";
-    case "yellow":
-      return "rgba(255, 255, 0, 0.7)";
-    case "gray":
-      return "rgba(128, 128, 128, 0.7)";
-    default:
-      return "rgba(255, 0, 0, 0.7)";
-  }
 }

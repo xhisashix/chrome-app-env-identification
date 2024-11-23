@@ -195,13 +195,8 @@ function createTableCell(
     inputElement.type = "text";
     inputElement.value = text || "";
   } else if (type === "select") {
-    inputElement = document.createElement("select");
-    inputElement.options.add(new Option("背景色を選択", ""));
-    inputElement.options.add(new Option("red", "red"));
-    inputElement.options.add(new Option("blue", "blue"));
-    inputElement.options.add(new Option("green", "green"));
-    inputElement.options.add(new Option("yellow", "yellow"));
-    inputElement.options.add(new Option("gray", "gray"));
+    inputElement = document.createElement("input");
+    inputElement.type = "color";
 
     if (text) {
       inputElement.value = text;
