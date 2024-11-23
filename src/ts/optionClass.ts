@@ -6,6 +6,7 @@ interface envSettings {
   envUrl: string;
   message: string;
   color: string;
+  labelPosition: string;
   activeFlag: boolean;
 }
 

@@ -8,6 +8,7 @@ interface envSettings {
   envUrl: string;
   message: string;
   color: string;
+  labelPosition: string;
   activeFlag: boolean;
 }
 
@@ -108,6 +109,9 @@ function getAllFormData() {
     const color = (
       envSettingsTableRow.getElementsByClassName("color")[0] as HTMLInputElement
     ).value;
+    const labelPosition = (
+      envSettingsTableRow.getElementsByClassName("label")[0] as HTMLInputElement
+    ).value;
     const activeFlag = (
       envSettingsTableRow.getElementsByClassName(
         "active_flag"
@@ -119,6 +123,7 @@ function getAllFormData() {
       envUrl: envUrl,
       message: message,
       color: color,
+      labelPosition: labelPosition,
       activeFlag: activeFlag,
     });
   }
@@ -151,7 +156,12 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     const envNameCell = createTableCell(envSetting.envName, "env_name");
     const envUrlCell = createTableCell(envSetting.envUrl, "env_url", "url");
     const messageCell = createTableCell(envSetting.message, "message");
-    const colorCell = createTableCell(envSetting.color, "color", "select");
+    const colorCell = createTableCell(envSetting.color, "color", "color");
+    const labelCell = createTableCell(
+      envSetting.labelPosition,
+      "label",
+      "labelPosition"
+    );
     const activeFlagCell = activeFlagCheckbox(envSetting.activeFlag);
     const deleteCell = document.createElement("td");
     deleteCell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
@@ -170,6 +180,7 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     envSettingsTableRow.appendChild(envUrlCell);
     envSettingsTableRow.appendChild(messageCell);
     envSettingsTableRow.appendChild(colorCell);
+    envSettingsTableRow.appendChild(labelCell);
     envSettingsTableRow.appendChild(activeFlagCell);
     envSettingsTableRow.appendChild(deleteCell);
 
@@ -189,22 +200,36 @@ function createTableCell(
   const cell = document.createElement("td");
   cell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
 
-  let inputElement: HTMLInputElement | HTMLSelectElement;
+  let inputElement: HTMLInputElement | HTMLSelectElement =
+    document.createElement("input");
   if (type === "text") {
     inputElement = document.createElement("input");
     inputElement.type = "text";
     inputElement.value = text || "";
-  } else if (type === "select") {
+  }
+
+  if (type === "color") {
     inputElement = document.createElement("input");
     inputElement.type = "color";
 
     if (text) {
       inputElement.value = text;
     }
-  } else {
+  }
+
+  if (type === "url") {
     inputElement = document.createElement("input");
     inputElement.type = "url";
     inputElement.placeholder = "https://example.com";
+    inputElement.value = text;
+  }
+
+  if (type === "labelPosition") {
+    inputElement = document.createElement("select");
+    inputElement.options.add(new Option("Bottom", "bottom"));
+    inputElement.options.add(new Option("Top", "top"));
+    inputElement.options.add(new Option("Right", "right"));
+    inputElement.options.add(new Option("Left", "left"));
     inputElement.value = text;
   }
 
@@ -252,7 +277,15 @@ function createDeleteButton() {
  */
 function activeFlagCheckbox(activeFlag?: boolean) {
   const activeFlagCell = document.createElement("td");
-  activeFlagCell.classList.add("border-t", "px-4", "py-2", "border-gray-200", "flex", "items-center", "justify-center");
+  activeFlagCell.classList.add(
+    "border-t",
+    "px-4",
+    "py-2",
+    "border-gray-200",
+    "flex",
+    "items-center",
+    "justify-center"
+  );
   const activeFlagCheckbox = document.createElement("input");
   activeFlagCheckbox.type = "checkbox";
   activeFlagCheckbox.checked = activeFlag || false;
@@ -278,7 +311,8 @@ function addEnvSettingsRow() {
   const envNameCell = createTableCell("", "env_name");
   const envUrlCell = createTableCell("", "env_url", "url");
   const messageCell = createTableCell("", "message");
-  const colorCell = createTableCell("", "color", "select");
+  const colorCell = createTableCell("", "color", "color");
+  const labelCell = createTableCell("", "label", "select");
   const activeFlagCell = activeFlagCheckbox();
   // append table cell to table row
   envSettingsTableRow.appendChild(projectNameCell);
@@ -286,6 +320,7 @@ function addEnvSettingsRow() {
   envSettingsTableRow.appendChild(envUrlCell);
   envSettingsTableRow.appendChild(messageCell);
   envSettingsTableRow.appendChild(colorCell);
+  envSettingsTableRow.appendChild(labelCell);
   envSettingsTableRow.appendChild(activeFlagCell);
 
   // append table row to table body
