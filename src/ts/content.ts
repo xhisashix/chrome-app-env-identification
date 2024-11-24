@@ -10,12 +10,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (!activeFlag) {
       return;
     }
-    // 既存のラベルを削除
-    const existingLabel = document.getElementById("test-environment-indicator");
-    if (existingLabel) {
-      existingLabel.remove();
-    }
 
+    removeExistingLabel();
     applyTestEnvironmentIndicator(
       projectName,
       envName,
@@ -25,6 +21,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     );
   }
 });
+
+/**
+ * 既存のラベルを削除する
+ */
+function removeExistingLabel() {
+  const existingLabel = document.getElementById("test-environment-indicator");
+  if (existingLabel) {
+    existingLabel.remove();
+  }
+}
 
 /**
  * applyTestEnvironmentIndicator - テスト環境のラベルを適用する
@@ -42,11 +48,7 @@ function applyTestEnvironmentIndicator(
   labelPosition: string
 ): void {
   // すでにラベルが存在している場合は削除
-  const existingLabel = document.getElementById("test-environment-indicator");
-  if (existingLabel) {
-    existingLabel.remove();
-  }
-
+  removeExistingLabel();
   const messageDiv = document.createElement("div");
   messageDiv.id = "test-environment-indicator";
   messageDiv.innerHTML = `【${projectName}】${envName} : ${message}`;
