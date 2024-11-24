@@ -12,12 +12,18 @@ interface envSettings {
   activeFlag: boolean;
 }
 
+/**
+ * Initializes the options page by setting up event handlers and retrieving environment settings.
+ * This function is called when the options page is loaded.
+ */
 function init() {
   setupEventHandlers();
   getEnvSettings();
 }
 
-// event handlers setting
+/**
+ * Sets up event handlers for the options page.
+ */
 function setupEventHandlers() {
   const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
   saveEnv.addEventListener("click", function () {
@@ -63,7 +69,11 @@ function setupEventHandlers() {
   });
 }
 
-// get env settings from storage
+/**
+ * get env settings from storage
+ * @return {Array} envSettings - env settings
+ * @return {void}
+ */
 function getEnvSettings() {
   OptionClass.getStorageEnvSettings(function (result: string) {
     const envSettings = OptionClass.getEnvSettings(result);
@@ -130,7 +140,10 @@ function getAllFormData() {
   return envSettings;
 }
 
-// create env settings table in options page
+/**
+ * create env settings table list
+ * @param {Array} envSettings - env settings
+ */
 function createEnvSettingsTableList(envSettings: envSettings[]) {
   const envSettingsTable = document.getElementById(
     "env_settings_table"
@@ -191,7 +204,13 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
   envSettingsTable.appendChild(envSettingsTableBody);
 }
 
-// create td element for env settings table
+/**
+ * create table cell
+ * @param {string} text - text
+ * @param {string} className - class name
+ * @param {string} type - input type
+ * @return {HTMLTableCellElement} cell - table cell
+ */
 function createTableCell(
   text: string,
   className?: string,
@@ -254,7 +273,10 @@ function createTableCell(
   return cell;
 }
 
-// create button element for env settings table
+/**
+ * create delete button
+ * @returns {HTMLButtonElement} deleteButton - delete button
+ */
 function createDeleteButton() {
   const deleteButton = document.createElement("button");
   deleteButton.classList.add(
@@ -294,7 +316,9 @@ function activeFlagCheckbox(activeFlag?: boolean) {
   return activeFlagCell;
 }
 
-// add env settings row
+/**
+ * add env settings row
+ */
 function addEnvSettingsRow() {
   const envSettingsTableBody = document.getElementById(
     "env_settings_table_body"
@@ -327,7 +351,10 @@ function addEnvSettingsRow() {
   envSettingsTableBody.appendChild(envSettingsTableRow);
 }
 
-// delete env settings row
+/**
+ * delete env settings row
+ * @param {number} row_id - row id
+ */
 function deleteEnvSettingsRow(row_id: number) {
   const envSettingsTableBody = document.getElementById(
     "env_settings_table_body"
@@ -339,7 +366,9 @@ function deleteEnvSettingsRow(row_id: number) {
   envSettingsTableBody.removeChild(envSettingsTableRow);
 }
 
-// flash message for save env settings
+/**
+ * flash message
+ */
 function flashMessage() {
   const flashMessage = document.getElementById("flash_message") as HTMLElement;
   flashMessage.classList.remove("hidden");
