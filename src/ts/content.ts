@@ -1,12 +1,20 @@
+const DEFAULT_PROJECT_NAME = "";
+const DEFAULT_ENV_NAME = "";
+const DEFAULT_MESSAGE = "備考なし";
+const DEFAULT_COLOR = "red";
+const DEFAULT_LABEL_POSITION = "bottom";
+const DEFAULT_ACTIVE_FLAG = false;
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.envSettings) {
     const envSettings = request.envSettings;
-    const projectName = envSettings.projectName || "";
-    const envName = envSettings.envName || "";
-    const message = envSettings.message || "備考なし";
-    const color = envSettings.color || "red";
-    const labelPosition = envSettings.labelPosition || "bottom";
-    const activeFlag = envSettings.activeFlag || false;
+    const projectName = envSettings.projectName || DEFAULT_PROJECT_NAME;
+    const envName = envSettings.envName || DEFAULT_ENV_NAME;
+    const message = envSettings.message || DEFAULT_MESSAGE;
+    const color = envSettings.color || DEFAULT_COLOR;
+    const labelPosition = envSettings.labelPosition || DEFAULT_LABEL_POSITION;
+    const activeFlag = envSettings.activeFlag || DEFAULT_ACTIVE_FLAG;
+
     if (!activeFlag) {
       return;
     }
@@ -47,8 +55,8 @@ function applyTestEnvironmentIndicator(
   color: string,
   labelPosition: string
 ): void {
-  // すでにラベルが存在している場合は削除
   removeExistingLabel();
+
   const messageDiv = document.createElement("div");
   messageDiv.id = "test-environment-indicator";
   messageDiv.innerHTML = `【${projectName}】${envName} : ${message}`;
