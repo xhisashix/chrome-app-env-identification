@@ -26,47 +26,55 @@ function init() {
  */
 function setupEventHandlers() {
   const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
-  saveEnv.addEventListener("click", function () {
-    const envSettings = getAllFormData();
-    const validateResult = OptionClass.validateHttpOrHttps(envSettings);
-
-    if (validateResult !== -1) {
-      // return error message
-      alert(
-        `${
-          validateResult + 1
-        }行目のURLはhttp://またはhttpsから始まる必要があります。`
-      );
-
-      // Add focus to the input element of the line that caused the error
-      const envSettingsTableBody = document.getElementById(
-        "env_settings_table_body"
-      ) as HTMLTableSectionElement;
-      const envSettingsTableRows = envSettingsTableBody.getElementsByClassName(
-        "env_settings_form_data"
-      );
-
-      const errorRow = envSettingsTableRows[
-        validateResult
-      ] as HTMLTableRowElement;
-      const errorInput = errorRow.getElementsByClassName(
-        "env_url"
-      )[0] as HTMLInputElement;
-      errorInput.classList.add("border-red-500");
-      errorInput.focus();
-
-      return;
-    }
-
-    console.log(envSettings);
-    OptionClass.saveToStorageEnvSettings(envSettings);
-    flashMessage();
-  });
+  saveEnv.addEventListener("click", handleSaveEnv);
 
   const addEnv = document.getElementById("add_env") as HTMLButtonElement;
-  addEnv.addEventListener("click", function () {
-    addEnvSettingsRow();
-  });
+  addEnv.addEventListener("click", addEnvSettingsRow);
+}
+
+/**
+ * save env settings
+ */
+function handleSaveEnv() {
+  const envSettings = getAllFormData();
+  const validateResult = OptionClass.validateHttpOrHttps(envSettings);
+
+  if (validateResult !== -1) {
+    showValidationError(validateResult);
+    return;
+  }
+
+  console.log(envSettings);
+  OptionClass.saveToStorageEnvSettings(envSettings);
+  flashMessage();
+}
+
+/**
+ * validate http or https
+ * @param {number} validateResult - validate result
+ */
+function showValidationError(validateResult: number) {
+  // return error message
+  alert(
+    `${
+      validateResult + 1
+    }行目のURLはhttp://またはhttpsから始まる必要があります。`
+  );
+
+  // Add focus to the input element of the line that caused the error
+  const envSettingsTableBody = document.getElementById(
+    "env_settings_table_body"
+  ) as HTMLTableSectionElement;
+  const envSettingsTableRows = envSettingsTableBody.getElementsByClassName(
+    "env_settings_form_data"
+  );
+
+  const errorRow = envSettingsTableRows[validateResult] as HTMLTableRowElement;
+  const errorInput = errorRow.getElementsByClassName(
+    "env_url"
+  )[0] as HTMLInputElement;
+  errorInput.classList.add("border-red-500");
+  errorInput.focus();
 }
 
 /**
