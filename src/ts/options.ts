@@ -336,7 +336,7 @@ function addEnvSettingsRow() {
   const envUrlCell = createTableCell("", "env_url", "url");
   const messageCell = createTableCell("", "message");
   const colorCell = createTableCell("", "color", "color");
-  const labelCell = createTableCell("", "label", "select");
+  const labelCell = createTableCell("", "label", "labelPosition");
   const activeFlagCell = activeFlagCheckbox();
   // append table cell to table row
   envSettingsTableRow.appendChild(projectNameCell);
