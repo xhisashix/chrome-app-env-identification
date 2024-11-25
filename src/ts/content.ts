@@ -87,7 +87,7 @@ function applyTestEnvironmentIndicator(
  */
 function createLabelPosition(labelPosition: string): string {
   let labelStyle = "";
-  const leftRightStyle = `height: 100vh; width: 50px; writing-mode: vertical-rl;`;
+  const leftRightStyle = `top: 0; height: 100vh; width: 50px; writing-mode: vertical-rl;`;
   if (labelPosition === "top") {
     labelStyle = `top: 0; bottom: auto;`;
   }
