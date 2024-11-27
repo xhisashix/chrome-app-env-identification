@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#test-environment-indicator-sample {
+  width: 100%;
+  margin: auto;
+  padding: 10px;
+  background-color: red;
+  color: white;
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  opacity: 0.7;
+  font-size: 36px;
+  z-index: 999999;
+}

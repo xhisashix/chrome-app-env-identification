@@ -71,7 +71,7 @@ function applyTestEnvironmentIndicator(
       padding: 10px;
       background-color: ${color};
       color: white;
-      opacity: 0.8;
+      opacity: 0.7;
       font-size: 36px;
       z-index: 999999;
     }
