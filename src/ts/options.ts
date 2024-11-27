@@ -50,11 +50,10 @@ function handleSaveEnv() {
 }
 
 /**
- * validate http or https
- * @param {number} validateResult - validate result
+ * Displays a validation error message for an invalid URL.
+ * @param {number} validateResult - The index of the row with the invalid URL.
  */
 function showValidationError(validateResult: number) {
-  // return error message
   alert(
     `${
       validateResult + 1
