@@ -44,7 +44,6 @@ function handleSaveEnv() {
     return;
   }
 
-  console.log(envSettings);
   OptionClass.saveToStorageEnvSettings(envSettings);
   flashMessage();
 }
