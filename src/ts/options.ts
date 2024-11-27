@@ -166,39 +166,66 @@ function createTableCell(
   const cell = document.createElement("td");
   cell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
 
-  let inputElement: HTMLInputElement | HTMLSelectElement =
-    document.createElement("input");
-  if (type === "text") {
-    inputElement = document.createElement("input");
-    inputElement.type = "text";
-    inputElement.value = text || "";
+  const inputElement = createInputElement(text, type);
+  applyCommonStyles(inputElement, className);
+
+  // add input element to td element
+  cell.appendChild(inputElement);
+  return cell;
+}
+
+/**
+ * create input element based on type
+ * @param {string} text - text
+ * @param {string} type - input type
+ * @return {HTMLInputElement | HTMLSelectElement} inputElement - input element
+ */
+function createInputElement(
+  text: string,
+  type: string
+): HTMLInputElement | HTMLSelectElement {
+  let inputElement: HTMLInputElement | HTMLSelectElement;
+
+  switch (type) {
+    case "color":
+      inputElement = document.createElement("input");
+      inputElement.type = "color";
+      inputElement.value = text || "";
+      break;
+    case "url":
+      inputElement = document.createElement("input");
+      inputElement.type = "url";
+      inputElement.placeholder = "https://example.com";
+      inputElement.value = text || "";
+      break;
+    case "labelPosition":
+      inputElement = document.createElement("select");
+      inputElement.options.add(new Option("Bottom", "bottom"));
+      inputElement.options.add(new Option("Top", "top"));
+      inputElement.options.add(new Option("Right", "right"));
+      inputElement.options.add(new Option("Left", "left"));
+      inputElement.value = text || "";
+      break;
+    case "text":
+    default:
+      inputElement = document.createElement("input");
+      inputElement.type = "text";
+      inputElement.value = text || "";
+      break;
   }
 
-  if (type === "color") {
-    inputElement = document.createElement("input");
-    inputElement.type = "color";
+  return inputElement;
+}
 
-    if (text) {
-      inputElement.value = text;
-    }
-  }
-
-  if (type === "url") {
-    inputElement = document.createElement("input");
-    inputElement.type = "url";
-    inputElement.placeholder = "https://example.com";
-    inputElement.value = text;
-  }
-
-  if (type === "labelPosition") {
-    inputElement = document.createElement("select");
-    inputElement.options.add(new Option("Bottom", "bottom"));
-    inputElement.options.add(new Option("Top", "top"));
-    inputElement.options.add(new Option("Right", "right"));
-    inputElement.options.add(new Option("Left", "left"));
-    inputElement.value = text;
-  }
-
+/**
+ * apply common styles to input element
+ * @param {HTMLInputElement | HTMLSelectElement} inputElement - input element
+ * @param {string} className - class name
+ */
+function applyCommonStyles(
+  inputElement: HTMLInputElement | HTMLSelectElement,
+  className?: string
+) {
   inputElement.classList.add(
     `${className}`,
     "w-full",
@@ -215,9 +242,6 @@ function createTableCell(
     "leading-tight",
     "focus:outline-none"
   );
-  // add input element to td element
-  cell.appendChild(inputElement);
-  return cell;
 }
 
 /**
