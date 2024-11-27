@@ -36,7 +36,7 @@ function setupEventHandlers() {
  * save env settings
  */
 function handleSaveEnv() {
-  const envSettings = getAllFormData();
+  const envSettings = OptionClass.getAllFormData();
   const validateResult = OptionClass.validateHttpOrHttps(envSettings);
 
   if (validateResult !== -1) {
@@ -85,65 +85,6 @@ function getEnvSettings() {
     const envSettings = OptionClass.getEnvSettings(result);
     createEnvSettingsTableList(envSettings);
   });
-}
-
-/**
- * get form all data
- * @return {Array} envSettings - env settings
- */
-function getAllFormData() {
-  const envSettingsTableBody = document.getElementById(
-    "env_settings_table_body"
-  ) as HTMLTableSectionElement;
-  const envSettingsTableRows = envSettingsTableBody.getElementsByClassName(
-    "env_settings_form_data"
-  );
-  const envSettingsArray: envSettings[] = [];
-  // Loop through the number of tr elements
-  for (let i = 0; i < envSettingsTableRows.length; i++) {
-    const envSettingsTableRow = envSettingsTableRows[i] as HTMLTableRowElement;
-    const projectName = (
-      envSettingsTableRow.getElementsByClassName(
-        "project_name"
-      )[0] as HTMLInputElement
-    ).value;
-    const envName = (
-      envSettingsTableRow.getElementsByClassName(
-        "env_name"
-      )[0] as HTMLInputElement
-    ).value;
-    const envUrl = (
-      envSettingsTableRow.getElementsByClassName(
-        "env_url"
-      )[0] as HTMLInputElement
-    ).value;
-    const message = (
-      envSettingsTableRow.getElementsByClassName(
-        "message"
-      )[0] as HTMLInputElement
-    ).value;
-    const color = (
-      envSettingsTableRow.getElementsByClassName("color")[0] as HTMLInputElement
-    ).value;
-    const labelPosition = (
-      envSettingsTableRow.getElementsByClassName("label")[0] as HTMLInputElement
-    ).value;
-    const activeFlag = (
-      envSettingsTableRow.getElementsByClassName(
-        "active_flag"
-      )[0] as HTMLInputElement
-    ).checked;
-    envSettingsArray.push({
-      projectName: projectName,
-      envName: envName,
-      envUrl: envUrl,
-      message: message,
-      color: color,
-      labelPosition: labelPosition,
-      activeFlag: activeFlag,
-    });
-  }
-  return envSettingsArray;
 }
 
 /**
