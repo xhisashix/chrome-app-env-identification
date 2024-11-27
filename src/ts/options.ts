@@ -98,8 +98,8 @@ function getAllFormData() {
   const envSettingsTableRows = envSettingsTableBody.getElementsByClassName(
     "env_settings_form_data"
   );
-  const envSettings: envSettings[] = [];
-  // tr要素の数だけループ
+  const envSettingsArray: envSettings[] = [];
+  // Loop through the number of tr elements
   for (let i = 0; i < envSettingsTableRows.length; i++) {
     const envSettingsTableRow = envSettingsTableRows[i] as HTMLTableRowElement;
     const projectName = (
@@ -133,7 +133,7 @@ function getAllFormData() {
         "active_flag"
       )[0] as HTMLInputElement
     ).checked;
-    envSettings.push({
+    envSettingsArray.push({
       projectName: projectName,
       envName: envName,
       envUrl: envUrl,
@@ -143,7 +143,7 @@ function getAllFormData() {
       activeFlag: activeFlag,
     });
   }
-  return envSettings;
+  return envSettingsArray;
 }
 
 /**
