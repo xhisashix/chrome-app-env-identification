@@ -187,6 +187,29 @@ class optionClass {
   }
 
   /**
+   * validate empty value
+   * @param {envSettings[]} envSettings - env settings
+   * @returns {object} - An object containing the index and the name of the empty field
+   */
+  validateEmptyValue(
+    envSettings: envSettings[]
+  ): { index: number; field: string } | null {
+    for (let i = 0; i < envSettings.length; i++) {
+      const envSetting = envSettings[i];
+      if (envSetting.projectName === "") {
+        return { index: i, field: "案件名" };
+      }
+      if (envSetting.envName === "") {
+        return { index: i, field: "環境名" };
+      }
+      if (envSetting.envUrl === "") {
+        return { index: i, field: "URL" };
+      }
+    }
+    return null;
+  }
+
+  /**
    * get form all data
    * @return {envSettings[]} - env settings
    */

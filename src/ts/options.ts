@@ -37,10 +37,20 @@ function setupEventHandlers() {
  */
 function handleSaveEnv() {
   const envSettings = OptionClass.getAllFormData();
-  const validateResult = OptionClass.validateHttpOrHttps(envSettings);
+  const validateEmptyResult = OptionClass.validateEmptyValue(envSettings);
+  const validateUrlResult = OptionClass.validateHttpOrHttps(envSettings);
 
-  if (validateResult !== -1) {
-    showValidationError(validateResult);
+  if (validateEmptyResult) {
+    alert(
+      `${validateEmptyResult.index + 1}行目の${
+        validateEmptyResult.field
+      }を入力してください。`
+    );
+    return;
+  }
+
+  if (validateUrlResult !== -1) {
+    showValidationError(validateUrlResult);
     return;
   }
 
@@ -111,9 +121,14 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     // create table cell
     const projectNameCell = createTableCell(
       envSetting.projectName,
-      "project_name"
+      "project_name",
+      "required_text"
     );
-    const envNameCell = createTableCell(envSetting.envName, "env_name");
+    const envNameCell = createTableCell(
+      envSetting.envName,
+      "env_name",
+      "required_text"
+    );
     const envUrlCell = createTableCell(envSetting.envUrl, "env_url", "url");
     const messageCell = createTableCell(envSetting.message, "message");
     const colorCell = createTableCell(envSetting.color, "color", "color");
@@ -187,6 +202,12 @@ function createInputElement(
   let inputElement: HTMLInputElement | HTMLSelectElement;
 
   switch (type) {
+    case "required_text":
+      inputElement = document.createElement("input");
+      inputElement.type = "text";
+      inputElement.required = true;
+      inputElement.value = text || "";
+      break;
     case "color":
       inputElement = document.createElement("input");
       inputElement.type = "color";
