@@ -188,9 +188,9 @@ class optionClass {
 
   /**
    * get form all data
-   * @return {Array} envSettings - env settings
+   * @return {envSettings[]} - env settings
    */
-  getAllFormData() {
+  getAllFormData(): envSettings[] {
     const envSettingsTableBody = document.getElementById(
       "env_settings_table_body"
     ) as HTMLTableSectionElement;
