@@ -1,16 +1,7 @@
 import optionClass from "./optionClass";
+import { envSettings } from "./types";
 
 const OptionClass = new optionClass();
-
-interface envSettings {
-  projectName: string;
-  envName: string;
-  envUrl: string;
-  message: string;
-  color: string;
-  labelPosition: string;
-  activeFlag: boolean;
-}
 
 /**
  * Initializes the options page by setting up event handlers and retrieving environment settings.

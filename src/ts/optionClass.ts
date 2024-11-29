@@ -1,16 +1,5 @@
 import storageClass from "./storageClass";
-
-interface envSettings {
-  projectName: string;
-  envName: string;
-  envUrl: string;
-  message: string;
-  color: string;
-  labelPosition: string;
-  activeFlag: boolean;
-}
-
-type envSettingsArray = Array<envSettings>;
+import { envSettings, envSettingsArray } from "./types";
 
 class optionClass {
   storage: storageClass;
@@ -61,7 +50,7 @@ class optionClass {
     deleteEnvSettings: envSettingsArray,
     insertEnvSettings: envSettingsArray
   ) {
-    deleteEnvSettings.forEach((deleteEnvSetting) => {
+    deleteEnvSettings.forEach((deleteEnvSetting: envSettings) => {
       if (!this.isSettingInArray(deleteEnvSetting, insertEnvSettings)) {
         this.deleteEnvSetting(deleteEnvSetting);
       }
@@ -78,17 +67,20 @@ class optionClass {
     setting: envSettings,
     array: envSettingsArray
   ): boolean {
-    return array.some((item) => this.areSettingsEqual(item, setting));
+    return array.some((item: envSettings) =>
+      this.areSettingsEqual(item, setting)
+    );
   }
 
   /**
    * deleteEnvSetting - Deletes a specific environment setting from storage.
-   * @param {envSettings} settingToDelete - The environment setting to delete.
+   * @param {envSettings[]} settingToDelete - The environment setting to delete.
    */
   deleteEnvSetting(settingToDelete: envSettings): void {
     this.getEnvSettingsFromStorageAsync().then((envSettings) => {
       const updatedEnvSettings = envSettings.filter(
-        (setting) => !this.areSettingsEqual(setting, settingToDelete)
+        (setting: envSettings) =>
+          !this.areSettingsEqual(setting, settingToDelete)
       );
 
       this.saveToStorageEnvSettingsArray(updatedEnvSettings);
