@@ -41,6 +41,7 @@ function handleSaveEnv() {
   const validateUrlResult = OptionClass.validateHttpOrHttps(envSettings);
 
   if (validateEmptyResult) {
+    showValidationError(validateEmptyResult.index, validateEmptyResult.target);
     alert(
       `${validateEmptyResult.index + 1}行目の${
         validateEmptyResult.field
@@ -50,7 +51,12 @@ function handleSaveEnv() {
   }
 
   if (validateUrlResult !== -1) {
-    showValidationError(validateUrlResult);
+    showValidationError(validateUrlResult, "env_url");
+    alert(
+      `${
+        validateUrlResult + 1
+      }行目のURLはhttp://またはhttpsから始まる必要があります。`
+    );
     return;
   }
 
@@ -61,14 +67,9 @@ function handleSaveEnv() {
 /**
  * Displays a validation error message for an invalid URL.
  * @param {number} validateResult - The index of the row with the invalid URL.
+ * @param {string} target - The target element to which the error message should be displayed.
  */
-function showValidationError(validateResult: number) {
-  alert(
-    `${
-      validateResult + 1
-    }行目のURLはhttp://またはhttpsから始まる必要があります。`
-  );
-
+function showValidationError(validateResult: number, target: string) {
   // Add focus to the input element of the line that caused the error
   const envSettingsTableBody = document.getElementById(
     "env_settings_table_body"
@@ -79,10 +80,15 @@ function showValidationError(validateResult: number) {
 
   const errorRow = envSettingsTableRows[validateResult] as HTMLTableRowElement;
   const errorInput = errorRow.getElementsByClassName(
-    "env_url"
+    target
   )[0] as HTMLInputElement;
   errorInput.classList.add("border-red-500");
   errorInput.focus();
+
+  // Remove the error message when the input element is changed
+  errorInput.addEventListener("input", function () {
+    errorInput.classList.remove("border-red-500");
+  });
 }
 
 /**

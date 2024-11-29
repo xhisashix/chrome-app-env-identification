@@ -193,17 +193,17 @@ class optionClass {
    */
   validateEmptyValue(
     envSettings: envSettings[]
-  ): { index: number; field: string } | null {
+  ): { index: number; field: string; target: string } | null {
     for (let i = 0; i < envSettings.length; i++) {
       const envSetting = envSettings[i];
       if (envSetting.projectName === "") {
-        return { index: i, field: "案件名" };
+        return { index: i, field: "案件名", target: "project_name" };
       }
       if (envSetting.envName === "") {
-        return { index: i, field: "環境名" };
+        return { index: i, field: "環境名", target: "env_name" };
       }
       if (envSetting.envUrl === "") {
-        return { index: i, field: "URL" };
+        return { index: i, field: "URL", target: "env_url" };
       }
     }
     return null;
