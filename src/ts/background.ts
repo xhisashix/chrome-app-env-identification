@@ -1,11 +1,5 @@
 import Storage from "./storageClass";
 import backgroundClass from "./backgroundClass";
-interface envSettings {
-  envName: string;
-  envUrl: string;
-  message: string;
-  color: string;
-}
 
 chrome.action.onClicked.addListener(function () {
   chrome.runtime.openOptionsPage();
@@ -63,11 +57,3 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     });
   }
 });
-
-// ページの背景を変更するelementを作成する
-function createChangeBackgroundElement() {
-  const changeBackgroundElement = document.createElement("div");
-  changeBackgroundElement.setAttribute("id", "change_background");
-  changeBackgroundElement.setAttribute("style", "background-color: red;");
-  document.body.appendChild(changeBackgroundElement);
-}
