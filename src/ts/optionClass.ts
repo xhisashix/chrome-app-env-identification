@@ -61,40 +61,24 @@ class optionClass {
     deleteEnvSettings: envSettingsArray,
     insertEnvSettings: envSettingsArray
   ) {
-    // delete
-    for (let i = 0; i < deleteEnvSettings.length; i++) {
-      const deleteEnvSetting = deleteEnvSettings[i];
-      const deleteProjectName = deleteEnvSetting.projectName;
-      const deleteEnvName = deleteEnvSetting.envName;
-      const deleteEnvUrl = deleteEnvSetting.envUrl;
-      const color = deleteEnvSetting.color;
-      const deleteMessage = deleteEnvSetting.message;
-      const activeFlag = deleteEnvSetting.activeFlag;
-      let isDelete = true;
-      for (let j = 0; j < insertEnvSettings.length; j++) {
-        const insertEnvSetting = insertEnvSettings[j];
-        const insertProjectName = insertEnvSetting.projectName;
-        const insertEnvName = insertEnvSetting.envName;
-        const insertEnvUrl = insertEnvSetting.envUrl;
-        const insertMessage = insertEnvSetting.message;
-        const insertColor = insertEnvSetting.color;
-        const insertActiveFlag = insertEnvSetting.activeFlag;
-        if (
-          deleteProjectName === insertProjectName &&
-          deleteEnvName === insertEnvName &&
-          deleteEnvUrl === insertEnvUrl &&
-          deleteMessage === insertMessage &&
-          color === insertColor &&
-          activeFlag === insertActiveFlag
-        ) {
-          isDelete = false;
-          break;
-        }
-      }
-      if (isDelete) {
+    deleteEnvSettings.forEach((deleteEnvSetting) => {
+      if (!this.isSettingInArray(deleteEnvSetting, insertEnvSettings)) {
         this.deleteEnvSetting(deleteEnvSetting);
       }
-    }
+    });
+  }
+
+  /**
+   * Checks if a setting is in the array
+   * @param {envSettings} setting - The setting to check
+   * @param {envSettingsArray} array - The array to check against
+   * @return {boolean} - Returns true if the setting is in the array
+   */
+  private isSettingInArray(
+    setting: envSettings,
+    array: envSettingsArray
+  ): boolean {
+    return array.some((item) => this.areSettingsEqual(item, setting));
   }
 
   /**
