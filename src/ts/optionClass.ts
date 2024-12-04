@@ -163,6 +163,27 @@ class optionClass {
   }
 
   /**
+   * validate duplicate value on url
+   * @param {array} envSettings - env settings
+   * @return {boolean} - true if duplicate url
+   */
+  isUrlDuplicate(envSettings: envSettings[]) {
+    const existingSettings = this.getAllFormData();
+    const existingUrls = existingSettings.map(
+      (setting: envSettings) => setting.envUrl
+    );
+    // 同じ文字列があるかどうかを判定して、結果とインデックスを戻り値として返す
+    for (let i = 0; i < envSettings.length; i++) {
+      const envSetting = envSettings[i];
+      if (existingUrls.includes(envSetting.envUrl)) {
+        return { duplicate: true, index: i };
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * validate empty value
    * @param {envSettings[]} envSettings - env settings
    * @returns {object} - An object containing the index and the name of the empty field

@@ -30,6 +30,7 @@ function handleSaveEnv() {
   const envSettings = OptionClass.getAllFormData();
   const validateEmptyResult = OptionClass.validateEmptyValue(envSettings);
   const validateUrlResult = OptionClass.validateHttpOrHttps(envSettings);
+  const validateDuplicateResult = OptionClass.isUrlDuplicate(envSettings);
 
   if (validateEmptyResult) {
     showValidationError(validateEmptyResult.index, validateEmptyResult.target);
@@ -48,6 +49,13 @@ function handleSaveEnv() {
         validateUrlResult + 1
       }行目のURLはhttp://またはhttpsから始まる必要があります。`
     );
+    return;
+  }
+
+  if (validateDuplicateResult) {
+    showValidationError(validateDuplicateResult.index + 1, "env_url");
+    showValidationError
+    alert("URLが重複しています。");
     return;
   }
 
