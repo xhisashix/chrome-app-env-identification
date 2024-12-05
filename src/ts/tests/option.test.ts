@@ -12,6 +12,8 @@ describe("OptionClass", () => {
           envUrl: "http://example.com",
           message: "test",
           color: "test",
+          labelPosition: "test",
+          activeFlag: true,
         },
         {
           projectName: "test",
@@ -19,6 +21,8 @@ describe("OptionClass", () => {
           envUrl: "https://example.com",
           message: "test",
           color: "test",
+          labelPosition: "test",
+          activeFlag: true,
         },
       ];
       const result = optionClass.validateHttpOrHttps(envSettings);
@@ -34,6 +38,8 @@ describe("OptionClass", () => {
           envUrl: "http://example.com",
           message: "test",
           color: "test",
+          labelPosition: "test",
+          activeFlag: true,
         },
         {
           projectName: "test",
@@ -41,6 +47,8 @@ describe("OptionClass", () => {
           envUrl: "ftp://example.com",
           message: "test",
           color: "test",
+          labelPosition: "test",
+          activeFlag: true,
         },
         {
           projectName: "test",
@@ -48,6 +56,8 @@ describe("OptionClass", () => {
           envUrl: "https://example.com",
           message: "test",
           color: "test",
+          labelPosition: "test",
+          activeFlag: true,
         },
       ];
       const result = optionClass.validateHttpOrHttps(envSettings);
@@ -63,6 +73,8 @@ describe("OptionClass", () => {
           envUrl: "ftp://example.com",
           message: "test",
           color: "test",
+          labelPosition: "test",
+          activeFlag: true,
         },
         {
           projectName: "test",
@@ -70,6 +82,8 @@ describe("OptionClass", () => {
           envUrl: "ws://example.com",
           message: "test",
           color: "test",
+          labelPosition: "test",
+          activeFlag: true,
         },
       ];
       const result = optionClass.validateHttpOrHttps(envSettings);
