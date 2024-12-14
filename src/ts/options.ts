@@ -1,4 +1,5 @@
 import optionClass from "./optionClass";
+import Papa from "papaparse";
 import { envSettings } from "./types";
 
 const OptionClass = new optionClass();
@@ -21,6 +22,88 @@ function setupEventHandlers() {
 
   const addEnv = document.getElementById("add_env") as HTMLButtonElement;
   addEnv.addEventListener("click", addEnvSettingsRow);
+
+  const csvUpload = document.getElementById("csv_upload") as HTMLInputElement;
+  csvUpload.addEventListener("change", handleCsvUpload);
+}
+
+/**
+ * Handles the upload of a CSV file.
+ */
+function handleCsvUpload() {
+  const fileInput = document.getElementById("csv_upload") as HTMLInputElement;
+  if (fileInput.files && fileInput.files[0]) {
+    const file = fileInput.files[0];
+    Papa.parse(file, {
+      header: true,
+      complete: function (results) {
+        const data = results.data as envSettings[];
+        data.forEach((envSetting) => {
+          addEnvSettingToTable(envSetting);
+        });
+      },
+    });
+  }
+}
+
+/**
+ * Adds an environment setting to the table.
+ * @param {envSettings} envSetting - The environment setting to add to the table.
+ */
+function addEnvSettingToTable(envSetting: envSettings) {
+  const envSettingsTableBody = document.getElementById(
+    "env_settings_table_body"
+  ) as HTMLTableSectionElement;
+  const envSettingsTableRow = document.createElement("tr");
+  envSettingsTableRow.classList.add(
+    "odd:bg-white",
+    "even:bg-gray-50",
+    "env_settings_form_data"
+  );
+
+  const projectNameCell = createTableCell(
+    OptionClass.trimHalfSpace(envSetting.projectName),
+    "project_name",
+    "required_text"
+  );
+  const envNameCell = createTableCell(
+    OptionClass.trimHalfSpace(envSetting.envName),
+    "env_name",
+    "required_text"
+  );
+  const envUrlCell = createTableCell(
+    OptionClass.trimHalfSpace(envSetting.envUrl),
+    "env_url",
+    "url"
+  );
+  const messageCell = createTableCell(envSetting.message, "message");
+  const colorCell = createTableCell(envSetting.color, "color", "color");
+  const labelCell = createTableCell(
+    envSetting.labelPosition,
+    "label",
+    "labelPosition"
+  );
+  const activeFlagCell = activeFlagCheckbox(envSetting.activeFlag);
+  const deleteCell = document.createElement("td");
+  deleteCell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
+
+  const deleteButton = createDeleteButton();
+  deleteButton.addEventListener("click", function () {
+    deleteEnvSettingsRow(envSettingsTableRow.rowIndex);
+  });
+
+  deleteCell.appendChild(deleteButton);
+
+  envSettingsTableRow.appendChild(projectNameCell);
+  envSettingsTableRow.appendChild(envNameCell);
+  envSettingsTableRow.appendChild(envUrlCell);
+  envSettingsTableRow.appendChild(messageCell);
+  envSettingsTableRow.appendChild(colorCell);
+  envSettingsTableRow.appendChild(labelCell);
+  envSettingsTableRow.appendChild(activeFlagCell);
+  envSettingsTableRow.appendChild(deleteCell);
+
+  envSettingsTableBody.appendChild(envSettingsTableRow);
 }
 
 /**
@@ -54,7 +137,7 @@ function handleSaveEnv() {
 
   if (validateDuplicateResult) {
     showValidationError(validateDuplicateResult.index + 1, "env_url");
-    showValidationError
+    showValidationError;
     alert("URLが重複しています。");
     return;
   }
