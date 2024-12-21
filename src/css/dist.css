@@ -710,6 +710,9 @@ video {
 .bg-transparent {
   background-color: transparent;
 }
+.p-2 {
+  padding: 0.5rem;
+}
 .p-4 {
   padding: 1rem;
 }
