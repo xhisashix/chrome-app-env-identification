@@ -120,18 +120,7 @@ class optionClass {
     this.storage.saveToStorage("env_settings", JSON.stringify(envSettings));
   }
 
-  /**
-   * getEnvSettings - env settings get from storage
-   * @param {string} result - env settings
-   * @return {Array} envSettings - env settings
-   */
-  getEnvSettings(result: string): envSettings[] {
-    if (result) {
-      return JSON.parse(result);
-    } else {
-      return [];
-    }
-  }
+
 
   /**
    * getStorage - env settings get from storage

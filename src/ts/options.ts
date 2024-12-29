@@ -1,8 +1,10 @@
+import envSettingsManager from "./envSettingsManager";
 import validation from "./validation";
 import optionClass from "./optionClass";
 import Papa from "papaparse";
 import { envSettings } from "./types";
 
+const EnvSettingsManagerClass = new envSettingsManager();
 const OptionClass = new optionClass();
 const Validation = new validation();
 
@@ -182,7 +184,7 @@ function showValidationError(validateResult: number, target: string) {
  */
 function getEnvSettings() {
   OptionClass.getStorageEnvSettings(function (result: string) {
-    const envSettings = OptionClass.getEnvSettings(result);
+    const envSettings = EnvSettingsManagerClass.getEnvSettings(result);
     createEnvSettingsTableList(envSettings);
   });
 }
