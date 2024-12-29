@@ -1,8 +1,10 @@
+import validation from "./validation";
 import optionClass from "./optionClass";
 import Papa from "papaparse";
 import { envSettings } from "./types";
 
 const OptionClass = new optionClass();
+const Validation = new validation();
 
 /**
  * Initializes the options page by setting up event handlers and retrieving environment settings.
@@ -112,7 +114,7 @@ function addEnvSettingToTable(envSetting: envSettings) {
 function handleSaveEnv() {
   const envSettings = OptionClass.getAllFormData();
   const validateEmptyResult = OptionClass.validateEmptyValue(envSettings);
-  const validateUrlResult = OptionClass.validateHttpOrHttps(envSettings);
+  const validateUrlResult = Validation.validateHttpOrHttps(envSettings);
   const validateDuplicateResult = OptionClass.isUrlDuplicate(envSettings);
 
   if (validateEmptyResult) {
