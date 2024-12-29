@@ -135,8 +135,8 @@ function handleSaveEnv() {
     return;
   }
 
-  if (validateDuplicateResult) {
-    showValidationError(validateDuplicateResult.index + 1, "env_url");
+  if (validateDuplicateResult !== -1) {
+    showValidationError(validateDuplicateResult, "env_url");
     showValidationError;
     alert("URLが重複しています。");
     return;

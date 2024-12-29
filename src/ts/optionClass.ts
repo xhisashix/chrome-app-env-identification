@@ -168,19 +168,19 @@ class optionClass {
    * @return {boolean} - true if duplicate url
    */
   isUrlDuplicate(envSettings: envSettings[]) {
-    const existingSettings = this.getAllFormData();
-    const existingUrls = existingSettings.map(
-      (setting: envSettings) => setting.envUrl
-    );
-    // 同じ文字列があるかどうかを判定して、結果とインデックスを戻り値として返す
-    for (let i = 0; i < envSettings.length; i++) {
-      const envSetting = envSettings[i];
-      if (existingUrls.includes(envSetting.envUrl)) {
-        return { duplicate: true, index: i };
+
+    const urlArray = envSettings.map((envSetting) => envSetting.envUrl);
+
+    // Check for duplicate URLs and return index of first duplicate URL
+    const urlSet = new Set();
+    for (let i = 0; i < urlArray.length; i++) {
+      if (urlSet.has(urlArray[i])) {
+        return i;
       }
+      urlSet.add(urlArray[i]);
     }
 
-    return null;
+    return -1;
   }
 
   /**
