@@ -1,11 +1,9 @@
 import envSettingsManager from "./envSettingsManager";
 import validation from "./validation";
-import optionClass from "./optionClass";
 import Papa from "papaparse";
 import { envSettings } from "./types";
 
 const EnvSettingsManagerClass = new envSettingsManager();
-const OptionClass = new optionClass();
 const Validation = new validation();
 
 /**
@@ -66,17 +64,17 @@ function addEnvSettingToTable(envSetting: envSettings) {
   );
 
   const projectNameCell = createTableCell(
-    OptionClass.trimHalfSpace(envSetting.projectName),
+    EnvSettingsManagerClass.trimHalfSpace(envSetting.projectName),
     "project_name",
     "required_text"
   );
   const envNameCell = createTableCell(
-    OptionClass.trimHalfSpace(envSetting.envName),
+    EnvSettingsManagerClass.trimHalfSpace(envSetting.envName),
     "env_name",
     "required_text"
   );
   const envUrlCell = createTableCell(
-    OptionClass.trimHalfSpace(envSetting.envUrl),
+    EnvSettingsManagerClass.trimHalfSpace(envSetting.envUrl),
     "env_url",
     "url"
   );
@@ -114,7 +112,7 @@ function addEnvSettingToTable(envSetting: envSettings) {
  * save env settings
  */
 function handleSaveEnv() {
-  const envSettings = OptionClass.getAllFormData();
+  const envSettings = EnvSettingsManagerClass.getAllFormData();
   const validateEmptyResult = Validation.validateEmptyValue(envSettings);
   const validateUrlResult = Validation.validateHttpOrHttps(envSettings);
   const validateDuplicateResult = Validation.isUrlDuplicate(envSettings);
@@ -146,7 +144,7 @@ function handleSaveEnv() {
     return;
   }
 
-  OptionClass.saveToStorageEnvSettings(envSettings);
+  EnvSettingsManagerClass.saveToStorageEnvSettings(envSettings);
   flashMessage();
 }
 
@@ -183,7 +181,7 @@ function showValidationError(validateResult: number, target: string) {
  * @return {void}
  */
 function getEnvSettings() {
-  OptionClass.getStorageEnvSettings(function (result: string) {
+  EnvSettingsManagerClass.getStorageEnvSettings(function (result: string) {
     const envSettings = EnvSettingsManagerClass.getEnvSettings(result);
     createEnvSettingsTableList(envSettings);
   });
