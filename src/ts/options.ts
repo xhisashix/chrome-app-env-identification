@@ -113,9 +113,9 @@ function addEnvSettingToTable(envSetting: envSettings) {
  */
 function handleSaveEnv() {
   const envSettings = OptionClass.getAllFormData();
-  const validateEmptyResult = OptionClass.validateEmptyValue(envSettings);
+  const validateEmptyResult = Validation.validateEmptyValue(envSettings);
   const validateUrlResult = Validation.validateHttpOrHttps(envSettings);
-  const validateDuplicateResult = OptionClass.isUrlDuplicate(envSettings);
+  const validateDuplicateResult = Validation.isUrlDuplicate(envSettings);
 
   if (validateEmptyResult) {
     showValidationError(validateEmptyResult.index, validateEmptyResult.target);
