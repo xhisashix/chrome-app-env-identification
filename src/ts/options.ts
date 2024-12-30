@@ -6,6 +6,23 @@ import { envSettings } from "./types";
 const EnvSettingsManagerClass = new envSettingsManager();
 const Validation = new validation();
 
+const DomElements: DomElements = {
+  projectName: "project_name",
+  envName: "env_name",
+  envUrl: "env_url",
+  message: "message",
+  color: "color",
+  label: "label",
+  activeFlag: "active_flag",
+  saveButton: "save_env",
+  deleteButton: "delete_env",
+  cancelButton: "cancel_env",
+  envList: "env_list",
+  envListContainer: "env_list_container",
+  addEnv: "add_env",
+  csvUpload: "csv_upload",
+};
+
 /**
  * Initializes the options page by setting up event handlers and retrieving environment settings.
  * This function is called when the options page is loaded.
@@ -19,13 +36,13 @@ function init() {
  * Sets up event handlers for the options page.
  */
 function setupEventHandlers() {
-  const saveEnv = document.getElementById("save_env") as HTMLButtonElement;
+  const saveEnv = document.getElementById(DomElements.saveButton) as HTMLButtonElement;
   saveEnv.addEventListener("click", handleSaveEnv);
 
-  const addEnv = document.getElementById("add_env") as HTMLButtonElement;
+  const addEnv = document.getElementById(DomElements.addEnv) as HTMLButtonElement;
   addEnv.addEventListener("click", addEnvSettingsRow);
 
-  const csvUpload = document.getElementById("csv_upload") as HTMLInputElement;
+  const csvUpload = document.getElementById(DomElements.csvUpload) as HTMLInputElement;
   csvUpload.addEventListener("change", handleCsvUpload);
 }
 
@@ -33,7 +50,7 @@ function setupEventHandlers() {
  * Handles the upload of a CSV file.
  */
 function handleCsvUpload() {
-  const fileInput = document.getElementById("csv_upload") as HTMLInputElement;
+  const fileInput = document.getElementById(DomElements.csvUpload) as HTMLInputElement;
   if (fileInput.files && fileInput.files[0]) {
     const file = fileInput.files[0];
     Papa.parse(file, {
@@ -65,21 +82,21 @@ function addEnvSettingToTable(envSetting: envSettings) {
 
   const projectNameCell = createTableCell(
     EnvSettingsManagerClass.trimHalfSpace(envSetting.projectName),
-    "project_name",
+    DomElements.projectName,
     "required_text"
   );
   const envNameCell = createTableCell(
     EnvSettingsManagerClass.trimHalfSpace(envSetting.envName),
-    "env_name",
+    DomElements.envName,
     "required_text"
   );
   const envUrlCell = createTableCell(
     EnvSettingsManagerClass.trimHalfSpace(envSetting.envUrl),
-    "env_url",
+    DomElements.envUrl,
     "url"
   );
-  const messageCell = createTableCell(envSetting.message, "message");
-  const colorCell = createTableCell(envSetting.color, "color", "color");
+  const messageCell = createTableCell(envSetting.message, DomElements.message);
+  const colorCell = createTableCell(envSetting.color, DomElements.color, DomElements.color);
   const labelCell = createTableCell(
     envSetting.labelPosition,
     "label",
@@ -128,7 +145,7 @@ function handleSaveEnv() {
   }
 
   if (validateUrlResult !== -1) {
-    showValidationError(validateUrlResult, "env_url");
+    showValidationError(validateUrlResult, DomElements.envUrl);
     alert(
       `${
         validateUrlResult + 1
@@ -138,7 +155,7 @@ function handleSaveEnv() {
   }
 
   if (validateDuplicateResult !== -1) {
-    showValidationError(validateDuplicateResult, "env_url");
+    showValidationError(validateDuplicateResult, DomElements.envUrl);
     showValidationError;
     alert("URLが重複しています。");
     return;
@@ -211,17 +228,17 @@ function createEnvSettingsTableList(envSettings: envSettings[]) {
     // create table cell
     const projectNameCell = createTableCell(
       envSetting.projectName,
-      "project_name",
+      DomElements.projectName,
       "required_text"
     );
     const envNameCell = createTableCell(
       envSetting.envName,
-      "env_name",
+      DomElements.envName,
       "required_text"
     );
-    const envUrlCell = createTableCell(envSetting.envUrl, "env_url", "url");
-    const messageCell = createTableCell(envSetting.message, "message");
-    const colorCell = createTableCell(envSetting.color, "color", "color");
+    const envUrlCell = createTableCell(envSetting.envUrl, DomElements.envUrl, "url");
+    const messageCell = createTableCell(envSetting.message, DomElements.message);
+    const colorCell = createTableCell(envSetting.color, DomElements.color, DomElements.color);
     const labelCell = createTableCell(
       envSetting.labelPosition,
       "label",
@@ -298,9 +315,9 @@ function createInputElement(
       inputElement.required = true;
       inputElement.value = text || "";
       break;
-    case "color":
+    case DomElements.color:
       inputElement = document.createElement("input");
-      inputElement.type = "color";
+      inputElement.type = DomElements.color;
       inputElement.value = text || "";
       break;
     case "url":
@@ -393,7 +410,7 @@ function activeFlagCheckbox(activeFlag?: boolean) {
   const activeFlagCheckbox = document.createElement("input");
   activeFlagCheckbox.type = "checkbox";
   activeFlagCheckbox.checked = activeFlag || false;
-  activeFlagCheckbox.classList.add("active_flag");
+  activeFlagCheckbox.classList.add(DomElements.activeFlag);
   activeFlagCell.appendChild(activeFlagCheckbox);
   return activeFlagCell;
 }
@@ -413,11 +430,11 @@ function addEnvSettingsRow() {
   );
 
   // create table cell
-  const projectNameCell = createTableCell("", "project_name");
-  const envNameCell = createTableCell("", "env_name");
-  const envUrlCell = createTableCell("", "env_url", "url");
-  const messageCell = createTableCell("", "message");
-  const colorCell = createTableCell("", "color", "color");
+  const projectNameCell = createTableCell("", DomElements.projectName);
+  const envNameCell = createTableCell("", DomElements.envName);
+  const envUrlCell = createTableCell("", DomElements.envUrl, "url");
+  const messageCell = createTableCell("", DomElements.message);
+  const colorCell = createTableCell("", DomElements.color, DomElements.color);
   const labelCell = createTableCell("", "label", "labelPosition");
   const activeFlagCell = activeFlagCheckbox();
   // append table cell to table row
