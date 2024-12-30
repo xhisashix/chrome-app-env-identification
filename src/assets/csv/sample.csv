@@ -1,0 +1,2 @@
+projectName,envName,envUrl,message,color,labelPosition,activeFlag
+project1,env1,http://localhost:8080,This is a test message,#ffffff,left,true

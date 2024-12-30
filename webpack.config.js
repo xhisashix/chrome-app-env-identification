@@ -37,6 +37,7 @@ module.exports = {
         { from: "./src/css/", to: "css" },
         { from: "./src/manifest.json", to: "manifest.json" },
         { from: "./src/img/", to: "img" },
+        { from: "./src/assets/", to: "assets" },
       ],
     }),
   ],
