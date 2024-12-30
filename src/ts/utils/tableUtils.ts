@@ -8,7 +8,7 @@ class tableUtils {
    * Adds an environment setting to the table.
    * @param {envSettings} envSetting - The environment setting to add to the table.
    */
-  addEnvSettingToTable(envSetting: envSettings) {
+  public addEnvSettingToTable(envSetting: envSettings) {
     const envSettingsTableBody = document.getElementById(
       "env_settings_table_body"
     ) as HTMLTableSectionElement;
@@ -77,7 +77,11 @@ class tableUtils {
    * @param {string} type - input type
    * @return {HTMLTableCellElement} cell - table cell
    */
-  createTableCell(text: string, className?: string, type: string = "text") {
+  protected createTableCell(
+    text: string,
+    className?: string,
+    type: string = "text"
+  ) {
     const cell = document.createElement("td");
     cell.classList.add("border-t", "px-4", "py-2", "border-gray-200");
 
@@ -95,7 +99,7 @@ class tableUtils {
    * @param {string} type - input type
    * @return {HTMLInputElement | HTMLSelectElement} inputElement - input element
    */
-  createInputElement(
+  protected createInputElement(
     text: string,
     type: string
   ): HTMLInputElement | HTMLSelectElement {
@@ -143,7 +147,7 @@ class tableUtils {
    * @param {HTMLInputElement | HTMLSelectElement} inputElement - input element
    * @param {string} className - class name
    */
-  applyCommonStyles(
+  protected applyCommonStyles(
     inputElement: HTMLInputElement | HTMLSelectElement,
     className?: string
   ) {
@@ -169,7 +173,7 @@ class tableUtils {
    * create delete button
    * @returns {HTMLButtonElement} deleteButton - delete button
    */
-  createDeleteButton() {
+  protected createDeleteButton() {
     const deleteButton = document.createElement("button");
     deleteButton.classList.add(
       "bg-red-500",
@@ -189,7 +193,7 @@ class tableUtils {
    * @param {boolean} activeFlag - active flag
    * @returns {HTMLInputElement} activeFlagCheckbox - active flag checkbox
    */
-  activeFlagCheckbox(activeFlag?: boolean) {
+  protected activeFlagCheckbox(activeFlag?: boolean) {
     const activeFlagCell = document.createElement("td");
     activeFlagCell.classList.add(
       "border-t",
@@ -211,7 +215,7 @@ class tableUtils {
   /**
    * add env settings row
    */
-  addEnvSettingsRow = () => {
+  public addEnvSettingsRow = () => {
     const envSettingsTableBody = document.getElementById(
       "env_settings_table_body"
     ) as HTMLTableSectionElement;
@@ -251,7 +255,7 @@ class tableUtils {
    * delete env settings row
    * @param {number} row_id - row id
    */
-  deleteEnvSettingsRow(row_id: number) {
+  protected deleteEnvSettingsRow(row_id: number) {
     const envSettingsTableBody = document.getElementById(
       "env_settings_table_body"
     ) as HTMLTableSectionElement;
@@ -266,7 +270,7 @@ class tableUtils {
    * create env settings table list
    * @param {Array} envSettings - env settings
    */
-  createEnvSettingsTableList(envSettings: envSettings[]) {
+  public createEnvSettingsTableList(envSettings: envSettings[]) {
     const envSettingsTable = document.getElementById(
       "env_settings_table"
     ) as HTMLTableElement;
