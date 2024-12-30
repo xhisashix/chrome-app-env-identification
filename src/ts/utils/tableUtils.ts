@@ -211,7 +211,7 @@ class tableUtils {
   /**
    * add env settings row
    */
-  addEnvSettingsRow() {
+  addEnvSettingsRow = () => {
     const envSettingsTableBody = document.getElementById(
       "env_settings_table_body"
     ) as HTMLTableSectionElement;
@@ -245,7 +245,7 @@ class tableUtils {
 
     // append table row to table body
     envSettingsTableBody.appendChild(envSettingsTableRow);
-  }
+  };
 
   /**
    * delete env settings row
