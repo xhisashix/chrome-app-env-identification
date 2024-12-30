@@ -1,4 +1,4 @@
-import Storage from "./storageClass";
+import Storage from "./utils/storageClass";
 import backgroundClass from "./backgroundClass";
 
 chrome.action.onClicked.addListener(function () {

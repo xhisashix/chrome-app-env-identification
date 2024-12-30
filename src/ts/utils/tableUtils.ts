@@ -1,4 +1,4 @@
-import { DomElements } from "./elementInterface";
+import { DomElements } from "../interface/elementInterface";
 import envSettingsManager from "./envSettingsManager";
 
 const EnvSettingsManagerClass = new envSettingsManager();

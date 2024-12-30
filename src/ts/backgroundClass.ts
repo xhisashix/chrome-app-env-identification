@@ -1,4 +1,4 @@
-import storageClass from "./storageClass";
+import storageClass from "./utils/storageClass";
 
 interface envSettings {
   envName: string;

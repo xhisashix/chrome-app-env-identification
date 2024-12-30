@@ -1,9 +1,9 @@
-import { DomElements } from "./elementInterface";
+import { DomElements } from "./interface/elementInterface";
 import envSettingsManager from "./envSettingsManager";
-import tableUtils from "./tableUtils";
-import validation from "./validation";
+import tableUtils from "./utils/tableUtils";
+import validation from "./utils/validation";
 import Papa from "papaparse";
-import { envSettings } from "./types";
+import { envSettings } from "./interface/types";
 
 const EnvSettingsManagerClass = new envSettingsManager();
 const TableUtils = new tableUtils();

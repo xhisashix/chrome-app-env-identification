@@ -10,6 +10,6 @@
     "types": ["chrome", "jest"],
     "lib": ["es2015", "dom", "ES2017"]
   },
-  "include": ["src/ts/*.ts", "check.test.ts"],
+  "include": ["src/ts/*.ts", "check.test.ts", "src/ts/interface/elementInterface.ts", "src/ts/utils/tableUtils.ts", "src/ts/interface/envInterface.ts", "src/ts/utils/storageClass.ts", "src/ts/interface/types.ts", "src/ts/utils/validation.ts"],
   "exclude": ["node_modules", "**/*.test.ts"]
 }
