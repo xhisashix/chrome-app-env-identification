@@ -1,5 +1,5 @@
-import StorageClass from "./storageClass";
-import { envSettings, envSettingsArray } from "./types";
+import StorageClass from "../utils/storageClass";
+import { envSettings, envSettingsArray } from "../interface/types";
 
 class EnvSettingsManager {
   private storage: StorageClass;

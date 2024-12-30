@@ -1,5 +1,5 @@
 import { DomElements } from "./interface/elementInterface";
-import envSettingsManager from "./envSettingsManager";
+import envSettingsManager from "./utils/envSettingsManager";
 import tableUtils from "./utils/tableUtils";
 import validation from "./utils/validation";
 import Papa from "papaparse";
