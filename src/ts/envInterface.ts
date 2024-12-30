@@ -1,4 +1,3 @@
-
 interface envSettings {
   projectName: string;
   envName: string;
