@@ -5,7 +5,7 @@ class validation {
    * @param {array} envSettings - env settings
    * @return {number} validateItem - validate result
    */
-  validateHttpOrHttps(envSettings: envSettings[]) {
+  validateHttpOrHttps(envSettings: envSettings[]): number {
     let validateItem = -1;
     for (let i = 0; i < envSettings.length; i++) {
       const envSetting = envSettings[i];
@@ -47,9 +47,9 @@ class validation {
   /**
    * validate duplicate value on url
    * @param {array} envSettings - env settings
-   * @return {boolean} - true if duplicate url
+   * @return {number} - The index of the first duplicate URL
    */
-  isUrlDuplicate(envSettings: envSettings[]) {
+  isUrlDuplicate(envSettings: envSettings[]): number {
     const urlArray = envSettings.map((envSetting) => envSetting.envUrl);
 
     // Check for duplicate URLs and return index of first duplicate URL

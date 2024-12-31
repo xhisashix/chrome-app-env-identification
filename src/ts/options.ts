@@ -1,11 +1,13 @@
 import { DomElements } from "./interface/elementInterface";
 import envSettingsManager from "./utils/envSettingsManager";
+import message from "./utils/Message";
 import tableUtils from "./utils/tableUtils";
 import validation from "./utils/validation";
 import Papa from "papaparse";
 import { envSettings } from "./interface/types";
 
 const EnvSettingsManagerClass = new envSettingsManager();
+const Message = new message();
 const TableUtils = new tableUtils();
 const Validation = new validation();
 
@@ -69,7 +71,10 @@ function handleSaveEnv() {
   const validateDuplicateResult = Validation.isUrlDuplicate(envSettings);
 
   if (validateEmptyResult) {
-    showValidationError(validateEmptyResult.index, validateEmptyResult.target);
+    Message.showValidationError(
+      validateEmptyResult.index,
+      validateEmptyResult.target
+    );
     alert(
       `${validateEmptyResult.index + 1}行目の${
         validateEmptyResult.field
@@ -79,7 +84,7 @@ function handleSaveEnv() {
   }
 
   if (validateUrlResult !== -1) {
-    showValidationError(validateUrlResult, DomElements.envUrl);
+    Message.showValidationError(validateUrlResult, DomElements.envUrl);
     alert(
       `${
         validateUrlResult + 1
@@ -89,41 +94,13 @@ function handleSaveEnv() {
   }
 
   if (validateDuplicateResult !== -1) {
-    showValidationError(validateDuplicateResult, DomElements.envUrl);
-    showValidationError;
+    Message.showValidationError(validateDuplicateResult, DomElements.envUrl);
     alert("URLが重複しています。");
     return;
   }
 
   EnvSettingsManagerClass.saveToStorageEnvSettings(envSettings);
-  flashMessage();
-}
-
-/**
- * Displays a validation error message for an invalid URL.
- * @param {number} validateResult - The index of the row with the invalid URL.
- * @param {string} target - The target element to which the error message should be displayed.
- */
-function showValidationError(validateResult: number, target: string) {
-  // Add focus to the input element of the line that caused the error
-  const envSettingsTableBody = document.getElementById(
-    "env_settings_table_body"
-  ) as HTMLTableSectionElement;
-  const envSettingsTableRows = envSettingsTableBody.getElementsByClassName(
-    "env_settings_form_data"
-  );
-
-  const errorRow = envSettingsTableRows[validateResult] as HTMLTableRowElement;
-  const errorInput = errorRow.getElementsByClassName(
-    target
-  )[0] as HTMLInputElement;
-  errorInput.classList.add("border-red-500");
-  errorInput.focus();
-
-  // Remove the error message when the input element is changed
-  errorInput.addEventListener("input", function () {
-    errorInput.classList.remove("border-red-500");
-  });
+  Message.flashMessage();
 }
 
 /**
@@ -136,17 +113,6 @@ function getEnvSettings() {
     const envSettings = EnvSettingsManagerClass.getEnvSettings(result);
     TableUtils.createEnvSettingsTableList(envSettings);
   });
-}
-
-/**
- * flash message
- */
-function flashMessage() {
-  const flashMessage = document.getElementById("flash_message") as HTMLElement;
-  flashMessage.classList.remove("hidden");
-  setTimeout(function () {
-    flashMessage.classList.add("hidden");
-  }, 2000);
 }
 
 init();
