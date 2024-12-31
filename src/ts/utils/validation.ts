@@ -1,3 +1,4 @@
+import { envSettings } from "../interface/types";
 class validation {
   /**
    * validate http or https
