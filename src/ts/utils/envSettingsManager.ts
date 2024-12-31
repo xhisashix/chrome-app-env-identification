@@ -213,7 +213,7 @@ class EnvSettingsManager {
    * @return {string} - trimed value
    */
   trimHalfSpace(value: string): string {
-    return value.replace(/[\s　]/g, "");
+    return value.replace(/[\s]/g, "");
   }
 }
 

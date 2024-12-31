@@ -5,7 +5,7 @@ const DEFAULT_COLOR = "red";
 const DEFAULT_LABEL_POSITION = "bottom";
 const DEFAULT_ACTIVE_FLAG = false;
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request) {
   if (request.envSettings) {
     const envSettings = request.envSettings;
     const projectName = envSettings.projectName || DEFAULT_PROJECT_NAME;
